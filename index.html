@@ -269,6 +269,14 @@ input:disabled{opacity:1;-webkit-text-fill-color:var(--ink)}button:disabled{curs
 .bkt{width:100%}.bkt th,.bkt td{padding:7px 4px!important;font-size:.8rem;text-align:center}.bkt td:first-child,.bkt th:first-child{text-align:left}
 .bkc{display:flex;gap:10px;align-items:flex-start;padding:9px;border-radius:10px;background:var(--sunk);font-size:.82rem;line-height:1.35}.bkc input{margin-top:3px;width:18px;height:18px;flex:none;accent-color:var(--orange)}
 .tagn{position:absolute;left:8px;top:8px;background:var(--orange);color:#fff;font:700 .72rem var(--font);padding:3px 8px;border-radius:6px}.noph{padding:14px;border-radius:10px;background:var(--sunk);font-size:.85rem;color:var(--ink2);margin-bottom:8px}
+.habs{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hab:last-child:nth-child(odd){grid-column:1/-1}.hab{display:flex;align-items:center;gap:8px;text-align:left;padding:11px 10px;border-radius:12px;border:1.5px solid var(--line2);background:var(--surface);color:var(--ink);font:600 .85rem var(--font);cursor:pointer;min-height:48px}
+.hab i{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line2);display:grid;place-items:center;font-style:normal;font-size:.8rem;color:#fff}.hab.on{border-color:var(--green);background:rgba(22,163,74,.08)}.hab.on i{background:var(--green);border-color:var(--green)}
+.ativ{display:grid;gap:8px;padding-top:10px;border-top:1px solid var(--line)}.ativ .bar{height:8px;border-radius:6px;background:var(--sunk);overflow:hidden}.ativ .bar i{display:block;height:100%}
+.sres{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}.sres div{background:var(--sunk);border-radius:12px;padding:10px 4px;display:grid;gap:2px}.sres b{font-size:1.4rem}.sres b.or{color:var(--orange)}.sres span{font-size:.72rem;color:var(--muted)}
+.exg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.exi{display:grid;gap:1px;padding:10px;border-radius:12px;background:var(--sunk);border-left:4px solid var(--green)}.exi.or{border-left-color:var(--orange)}.exi span{font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}.exi b{font-size:1.35rem}.exi.or b{color:var(--orange)}.exi small{font-size:.7rem;color:var(--muted)}.exi em{font-style:normal;font-size:.72rem;font-weight:700}.exi em.ok,.cint em.ok{color:#0a8a3a}.exi em.or,.cint em.or{color:var(--orange)}
+.cint{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;padding:12px;border-radius:12px;background:var(--sunk)}.cint span{display:block;font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase}.cint b{font-size:1.6rem}.cint em{font-style:normal;font-size:.8rem;font-weight:700;color:var(--muted)}
+.cmp{display:grid;gap:4px}.cmp h4{margin:10px 0 2px;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--orange)}.ci{display:grid;grid-template-columns:24px 1fr auto;gap:8px;align-items:center;text-align:left;padding:9px 4px;border:none;border-bottom:1px dashed var(--line);background:transparent;color:var(--ink);font:500 .88rem var(--font);cursor:pointer}.ci i{width:20px;height:20px;border-radius:6px;border:2px solid var(--line2);display:grid;place-items:center;font-style:normal;font-size:.75rem;color:#fff}.ci b{font-weight:700;font-size:.82rem;text-align:right}.ci.on span,.ci.on b{text-decoration:line-through;color:var(--muted)}.ci.on i{background:var(--green);border-color:var(--green)}
+.evt{font-style:normal;font-size:.65rem;font-weight:800;color:#fff;background:var(--orange);border-radius:5px;padding:1px 5px;margin-left:4px;text-transform:uppercase}
 .undo{font:600 .78rem var(--font);color:var(--muted);background:none;border:none;text-decoration:underline;padding:4px 0;cursor:pointer;justify-self:start}
 .tlp{padding:5px 0;font-size:.88rem;border-top:1px dashed var(--line)}
 .tlo{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}.tlo i{font-style:normal;font-weight:800;color:var(--orange);text-transform:uppercase;font-size:.66rem;letter-spacing:.05em;margin-right:6px}
@@ -445,15 +453,15 @@ const ALT=[
   {id:'a_pant_s',n:'Panturrilha no degrau',q:'panturrilha unilateral no degrau em casa',s:3,r:[12,20],d:30,bw:1,uni:1},
   {id:'a_prancha_l',n:'Prancha lateral',q:'prancha lateral execução correta',s:2,r:[20,40],d:20,bw:1,t:1,o:'Cada lado.'}]},
 ];
-const PERFIL_PADRAO={jean:{nome:'Jean',sexo:'m',idade:33,altura:173,peso:80,gord:26,bmr:1573,data:'2026-11-02'},max:{nome:'Max'},patrick:{nome:'Patrick'},carol:{nome:'Carol',sexo:'f',idade:32,altura:157,peso:60,data:'2026-11-14',soDieta:1,modoPadrao:'equilibrada',
+const PERFIL_PADRAO={jean:{nome:'Jean',sexo:'m',idade:33,altura:173,peso:80,gord:26,bmr:1573,data:'2026-11-02'},max:{nome:'Max'},patrick:{nome:'Patrick'},carol:{nome:'Carol',sexo:'f',idade:32,altura:157,peso:60,data:'2026-11-14',soDieta:1,modoPadrao:'equilibrada',examesIni:{data:'2026-10-26',tgp:58.6,tgo:62.1,ggt:134,ct:193,ldl:123.7,hdl:52},
   agua:[[5.67,250],[7,200],[8.83,250],[10,250],[11.5,200],[13,300],[14.5,250],[16,250],[17.5,200],[19,150]],
   dietas:{
-   leve:{nome:'Leve',sub:'perder gordura',meta:{kcal:1400,P:105,G:45},ref:[['5h40','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['8h50','Lanche','1 iogurte natural + 1 maçã','pos'],
-     ['11h30','Almoço','80 g de arroz + 1 concha de feijão + 150 g de frango + salada','almoco'],['17h30','Café reforçado','1 pão francês + 80 g de frango ou 2 ovos cozidos + salada + 200 ml de leite desnatado','lanche2'],['20h','Noite (só se tiver fome)','1 laranja','jantar']]},
-   equilibrada:{nome:'Equilibrada',sub:'melhorar exames',meta:{kcal:1600,P:110,G:50},ref:[['5h40','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['8h50','Lanche','200 ml de leite desnatado + 1 banana + 30 g de aveia','pos'],
-     ['11h30','Almoço','100 g de arroz + 1 concha de feijão + 150 g de frango + salada + 1 laranja','almoco'],['17h30','Café reforçado','1 pão francês + 100 g de frango ou 2 ovos cozidos + salada + 200 ml de leite desnatado','lanche2'],['20h','Noite (só se tiver fome)','1 iogurte natural','jantar']]},
-   manter:{nome:'Manter',sub:'manter o peso',meta:{kcal:1850,P:110,G:55},ref:[['5h40','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['8h50','Lanche','200 ml de leite desnatado + 1 banana + 30 g de aveia','pos'],
-     ['11h30','Almoço','120 g de arroz + 1 concha de feijão + 150 g de frango + salada + 1 laranja','almoco'],['17h30','Café reforçado','1 pão francês + 100 g de frango ou 2 ovos cozidos + salada + 200 ml de leite desnatado','lanche2'],['20h','Jantar leve','60 g de arroz + 1 concha de feijão + 100 g de frango ou 1 lata de sardinha + legumes','jantar']]}}}};
+   leve:{nome:'Leve',sub:'perder mais rápido',meta:{kcal:1450,P:95,G:45},ref:[['5h40','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['8h50','Lanche','1 iogurte natural + 1 maçã','pos'],
+     ['11h30','Almoço','80 g de arroz + 1 concha de feijão + 120 g de frango + 1 prato de salada (folhas, tomate e cenoura) + 100 g de legumes (abobrinha, chuchu ou brócolis)','almoco'],['17h30','Café reforçado','1 pão francês + 80 g de frango ou 2 ovos cozidos + tomate e folhas + 200 ml de leite desnatado','lanche2'],['20h','Noite (só se tiver fome)','1 laranja','jantar']]},
+   equilibrada:{nome:'Equilibrada',sub:'exames · perda leve',meta:{kcal:1700,P:100,G:50},ref:[['5h40','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['8h50','Lanche','200 ml de leite desnatado + 1 banana + 30 g de aveia','pos'],
+     ['11h30','Almoço','100 g de arroz + 1 concha de feijão + 120 g de frango + 1 prato de salada (folhas, tomate e cenoura) + 100 g de legumes (abobrinha, chuchu ou brócolis) + 1 laranja','almoco'],['17h30','Café reforçado','1 pão francês + 80 g de frango ou 2 ovos cozidos + tomate e folhas + 200 ml de leite desnatado','lanche2'],['20h','Noite (só se tiver fome)','1 iogurte natural + 1 banana','jantar']]},
+   manter:{nome:'Manter',sub:'manter o peso',meta:{kcal:1850,P:105,G:55},ref:[['5h40','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['8h50','Lanche','200 ml de leite desnatado + 1 banana + 30 g de aveia','pos'],
+     ['11h30','Almoço','120 g de arroz + 1 concha de feijão + 120 g de frango + 1 prato de salada (folhas, tomate e cenoura) + 100 g de legumes (abobrinha, chuchu ou brócolis) + 1 laranja','almoco'],['17h30','Café reforçado','1 pão francês + 80 g de frango ou 2 ovos cozidos + tomate e folhas + 200 ml de leite desnatado','lanche2'],['20h','Jantar leve','60 g de arroz + 1 concha de feijão + 100 g de frango ou 1 lata de sardinha + 150 g de legumes (abobrinha, brócolis ou chuchu)','jantar']]}}}};
 let BASE={data:'2026-11-02',peso:80,gord:26,altura:173,sexo:'m',idade:33};
 
 /* ---------------- Estado ---------------- */
@@ -665,7 +673,7 @@ function planoFlex0(){const T=METAS(),M=macrosHoje(),h=hAgora(),HR=horarios();
     if(s[0]==='pos'||s[0]==='lanche2'){const PP=perfis()[PERF]||{};it.push(PP.whey===false?(s[0]==='pos'?'3 ovos cozidos':'1 lata de atum'):'1 scoop de whey com 250 ml de água');const ov=Math.min(3,Math.round(Math.max(0,p-25)/6.6));if(ov>=1)it.push(ov+(ov>1?' ovos cozidos':' ovo cozido'));const cl=c-2;if(cl>10){const av=Math.min(40,r5(cl/0.666));it.push(av+' g de aveia');if(cl-av*0.666>15){const f=fruta(s[0]);if(f)it.push(f+' (separada do shake)')}}}
     else if(s[0]==='lanche1'||s[0]==='extra'){const ov=Math.max(2,Math.min(4,Math.round(p/6.6)));it.push(ov+' ovos');if(c>12){const f=c>30?null:fruta(s[0]);it.push(f||r10(Math.min(120,c/0.28))+' g de arroz')}if(g-ov*5>6)it.push('1 fatia de mussarela')}
     else if(s[0]==='cafe'){it.push((perfis()[PERF]||{}).leite===false?'café preto':'café com 200 ml de leite integral');if(c>15)it.push(fruta(s[0])||r5(Math.min(40,c/0.666))+' g de aveia')}
-    else{const prot=Math.min(250,r10(Math.max(0,p-4)/0.32));it.push(prot+' g de frango'+(Math.round(prot*0.32/6.6)<=6?' ou '+Math.max(2,Math.round(prot*0.32/6.6))+' ovos':' ou 1 lata de atum com 3 ovos'));const fj=1,cap=s[0]==='jantar'?150:250,ar0=r10(Math.max(0,c-fj*11.7)/0.28),ar=Math.min(cap,ar0),sob=(ar0-ar)*0.28;if(ar>=30)it.push(ar+' g de arroz');if(fj)it.push('1 concha de feijão');if(sob>12&&s[0]!=='jantar')it.push(fruta(s[0])||'1 concha extra de feijão');it.push(s[0]==='jantar'?'legumes à vontade':'salada à vontade');const ms=Math.min(2,Math.floor((g-prot*0.03)/5));if(ms>0)it.push(ms+(ms>1?' fatias':' fatia')+' de mussarela')}
+    else{const prot=Math.min(250,r10(Math.max(0,p-4)/0.32));it.push(prot+' g de frango'+(Math.round(prot*0.32/6.6)<=6?' ou '+Math.max(2,Math.round(prot*0.32/6.6))+' ovos':' ou 1 lata de atum com 3 ovos'));const fj=1,cap=s[0]==='jantar'?150:250,ar0=r10(Math.max(0,c-fj*11.7)/0.28),ar=Math.min(cap,ar0),sob=(ar0-ar)*0.28;if(ar>=30)it.push(ar+' g de arroz');if(fj)it.push('1 concha de feijão');if(sob>12&&s[0]!=='jantar')it.push(fruta(s[0])||'1 concha extra de feijão');it.push(s[0]==='jantar'?'150 g de legumes (abobrinha, brócolis ou chuchu)':'1 prato de salada (folhas, tomate e cenoura)');const ms=Math.min(2,Math.floor((g-prot*0.03)/5));if(ms>0)it.push(ms+(ms>1?' fatias':' fatia')+' de mussarela')}
     const main=s[0]==='almoco'||s[0]==='jantar';it=ajustar(it,s[0],Math.min(main?900:600,R.k*f),fruta,BUD);
     return [TT[s[0]]<=h+0.05?'Agora':fmtH(TT[s[0]]),s[1],it.join(' + '),Math.round(kcalItens(it)),s[0]]})}}
 function itensHTML(t){return `<ul class="itens">${String(t).split(' + ').map(p=>{const o=p.split(' ou ');return `<li>${esc(o[0])}${o.slice(1).map(a=>`<span class="alt"><i>OU</i>${esc(a)}</span>`).join('')}</li>`}).join('')}</ul>`}
@@ -801,9 +809,9 @@ function renderLimites(){const T=METAS(),M=macrosHoje(),gr=Math.max(0,Math.round
    ['Só de vez em quando','Açúcar, mel e achocolatado · suco de caixinha · refrigerante · doce · fritura · salgadinho · embutidos (presunto, salsicha) · álcool. Uma refeição livre por semana, sem culpa.']];
   return `<div class="card stack"><h3>Comer sem exagero</h3>${L.map(l=>`<div class="lim"><b>${l[0]}</b>${Array.isArray(l[1])?`<div class="limt">${l[1].map(r=>`<div><span>${r[0]}</span><b>${r[1]}</b></div>`).join('')}</div>`:`<span>${l[1]}</span>`}</div>`).join('')}
    <div class="lim"><b>Gordura que ainda cabe hoje: <span style="color:var(--orange)">${gr} g</span></b><span>1 fatia de mussarela ≈ 5 g de gordura</span></div></div>`}
-const PLANOS={emagrecer:[['5h','Café da manhã','Café com 200 ml de leite desnatado'],['7h','Pós-treino','1 scoop de whey com 250 ml de água + 20 g de aveia'],['10h','Lanche','3 ovos cozidos + 1 maçã'],['13h30','Almoço','80 g de arroz + 1 concha de feijão + 150 g de frango + salada à vontade'],['16h','Lanche','1 scoop de whey com 250 ml de água'],['19h30','Jantar','Omelete de 3 ovos + legumes à vontade']],
-   recomp:[['5h','Café da manhã','Café com 200 ml de leite desnatado + 1 banana'],['7h','Pós-treino','1 scoop de whey com 250 ml de água + 30 g de aveia + 2 ovos cozidos'],['10h','Lanche','3 ovos cozidos + 1 laranja'],['13h30','Almoço','120 g de arroz + 1 concha de feijão + 150 g de frango + salada'],['16h','Lanche','1 scoop de whey com 250 ml de água + 1 maçã (separada do shake)'],['19h30','Jantar','Omelete de 3 ovos ou 150 g de frango + 50 g de arroz + 1 concha de feijão + legumes']],
-   hiper:[['5h','Café da manhã','Café com 200 ml de leite integral + 1 banana + 1 fatia de mussarela'],['7h','Pós-treino','1 scoop de whey com 250 ml de água + 40 g de aveia'],['10h','Lanche','3 ovos mexidos com 5 g de manteiga + 60 g de arroz + 1 laranja'],['13h30','Almoço','180 g de arroz + 1 concha de feijão + 130 g de frango + salada + 1 fatia de mussarela'],['16h','Lanche','1 scoop de whey com 250 ml de água + 40 g de aveia + 1 maçã (separada do shake)'],['19h30','Jantar','130 g de arroz + 1 concha de feijão + omelete de 3 ovos com 1 fatia de mussarela e 5 g de manteiga ou 130 g de frango + legumes']]};
+const PLANOS={emagrecer:[['5h','Café da manhã','Café com 200 ml de leite desnatado'],['7h','Pós-treino','1 scoop de whey com 250 ml de água + 20 g de aveia'],['10h','Lanche','3 ovos cozidos + 1 maçã'],['13h30','Almoço','80 g de arroz + 1 concha de feijão + 150 g de frango + 1 prato de salada (folhas, tomate e cenoura)'],['16h','Lanche','1 scoop de whey com 250 ml de água'],['19h30','Jantar','Omelete de 3 ovos + 150 g de legumes (abobrinha, brócolis ou chuchu)']],
+   recomp:[['5h','Café da manhã','Café com 200 ml de leite desnatado + 1 banana'],['7h','Pós-treino','1 scoop de whey com 250 ml de água + 30 g de aveia + 2 ovos cozidos'],['10h','Lanche','3 ovos cozidos + 1 laranja'],['13h30','Almoço','120 g de arroz + 1 concha de feijão + 150 g de frango + 1 prato de salada (folhas, tomate e cenoura)'],['16h','Lanche','1 scoop de whey com 250 ml de água + 1 maçã (separada do shake)'],['19h30','Jantar','Omelete de 3 ovos ou 150 g de frango + 50 g de arroz + 1 concha de feijão + 150 g de legumes (abobrinha, brócolis ou chuchu)']],
+   hiper:[['5h','Café da manhã','Café com 200 ml de leite integral + 1 banana + 1 fatia de mussarela'],['7h','Pós-treino','1 scoop de whey com 250 ml de água + 40 g de aveia'],['10h','Lanche','3 ovos mexidos com 5 g de manteiga + 60 g de arroz + 1 laranja'],['13h30','Almoço','180 g de arroz + 1 concha de feijão + 130 g de frango + 1 prato de salada (folhas, tomate e cenoura) + 1 fatia de mussarela'],['16h','Lanche','1 scoop de whey com 250 ml de água + 40 g de aveia + 1 maçã (separada do shake)'],['19h30','Jantar','130 g de arroz + 1 concha de feijão + omelete de 3 ovos com 1 fatia de mussarela e 5 g de manteiga ou 130 g de frango + 150 g de legumes (abobrinha, brócolis ou chuchu)']]};
 function adaptTxt(t,h){const P=perfis()[PERF]||{};let x=t;if(P.whey===false)x=x.replace(/1 scoop de whey( com \d+ ml de água)?/g,h==='16h'?'1 lata de atum':'2 ovos cozidos');if(P.leite===false)x=x.replace(/Café com \d+ ml de leite( desnatado)?/g,'Café preto').replace(/ \+ \d+ ml de leite( desnatado)?/g,'');return x}
 function renderDieta(){
   const md=modo(),T=METAS();
@@ -898,7 +906,7 @@ function renderProgresso(){
   const lastM=medidas.slice().reverse().find(m=>navy(m.cintura)),atual=lastM?navy(lastM.cintura):BASE.gord;
   const med7=(()=>{const d0=new Date(hoje()+'T12:00:00'),iso=k=>{const d=new Date(d0);d.setDate(d.getDate()-k);return d.toISOString().slice(0,10)},av=(a,b)=>{const L=medidas.filter(m=>m.peso&&m.data>iso(b)&&m.data<=iso(a)).map(m=>+m.peso);return L.length?L.reduce((x,y)=>x+y,0)/L.length:null},w1=av(0,7),w0=av(7,14);
    if(w1==null)return '';const df=w0!=null?w1-w0:null;return `<p class="small" style="margin:0">Média dos últimos 7 dias: <b>${w1.toFixed(1).replace('.',',')} kg</b>${df!=null?` <span class="${df>0.25?'att':'muted'}">(${df>0?'+':''}${df.toFixed(1).replace('.',',')} kg na semana)</span>`:''}. Ganho bom: 0,1 a 0,2 kg por semana.</p>`})();
-const medCard=`<div class="card stack"><div class="ex-top"><h3>Medidas</h3>${soDieta()?'':`<span class="small muted">≈ ${atual.toFixed(1).replace('.',',')}% de gordura</span>`}</div>${med7}
+const medCard=`<div class="card stack"><div class="ex-top"><h3>Medidas</h3>${soDieta()?'</div>'+renderCintura()+'<div style="display:none">':''}${soDieta()?'':`<span class="small muted">≈ ${atual.toFixed(1).replace('.',',')}% de gordura</span>`}</div>${med7}
    <form class="form ${soDieta()?'m2':'m3'}" id="fMed"><input id="mData" type="hidden" value="${dt}"><label>Peso (kg)<input id="mPeso" inputmode="decimal" placeholder="${soDieta()?'60,0':'80,0'}"></label><label>Cintura (cm)<input id="mCint" inputmode="decimal" placeholder="${soDieta()?'80,0':'95,0'}"></label>${soDieta()?'':'<label>Braço (cm)<input id="mBraco" inputmode="decimal" placeholder="36,0"></label>'}
    <button class="btn" style="grid-column:1/-1;margin-top:2px">Salvar medida de hoje</button></form><p class="small muted" style="margin:0">${soDieta()?'Em jejum, 1 vez por semana. Cintura na altura do umbigo.':'Em jejum. Cintura no umbigo, braço contraído.'}</p>${tab}</div>`;
   const ssw=seriesSemana(),rc=recuperacao();
@@ -910,7 +918,7 @@ const medCard=`<div class="card stack"><div class="ex-top"><h3>Medidas</h3>${soD
    <span class="lbl" style="margin-top:4px">Últimos treinos</span><div class="hist">${sesL}</div></div>`;
   const byWeek={};medidas.forEach(m=>{const w=weekOf(m.data);byWeek[w]=m});let rows='';
   for(let n=1;n<=12;n++){const m=proj(n,.3,.12),me=byWeek[n],bf=me&&navy(me.cintura);rows+=`<tr class="${n===8?'mile':''}${n===semanaAtual()?' now':''}"><td>${n}${n===8?' · InBody':''}</td><td>${m.bf.toFixed(1).replace('.',',')}%</td><td class="meas">${me&&me.peso?String(me.peso).replace('.',','):'–'}</td><td class="meas">${bf?bf.toFixed(1).replace('.',',')+'%':'–'}</td></tr>`}
-  if(soDieta())return medCard+renderMeuPlano()+renderBackup();
+  if(soDieta())return renderExames()+medCard+resumoSemanaSaude()+renderCompras()+renderMeuPlano()+renderBackup();
   return '<button class="undo ajp" data-perfedit="1">Ajustar meu plano (dados, dieta e treino)</button>'+renderCheckin()+resumo+renderMeuPlano()+renderBackup()+renderCal()+medCard+renderCorpo()+(soDieta()?'':semCard+renderCarga())+renderAnalise(true)+
   `<div class="card stack"><h3>Projeção de gordura · 12 semanas</h3><div class="chart">${renderChart()}</div><div class="legend"><span><i style="background:var(--orange)"></i>Previsto</span><span><i style="background:var(--ink)"></i>Você</span></div></div>
   <div class="tbl"><table style="min-width:0"><thead><tr><th>Sem.</th><th>Previsto</th><th>Seu peso</th><th>Seu %</th></tr></thead><tbody>${rows}</tbody></table></div>
@@ -1116,15 +1124,18 @@ function tagsDe(x){const base=String(x.nome).replace(/\s*\(.*$/,'');let t=FTAG[b
   const i=t.indexOf('|'),pos=i<0?t:t.slice(0,i),neg=i<0?[]:t.slice(i+1);
   return pos.concat(neg).length?`<div class="tags">${pos.map(v=>`<span class="p">+ ${v}</span>`).join('')}${neg.map(v=>`<span class="n">− ${v}</span>`).join('')}</div>`:''}
 let EDIT=false;
+function renderComidaSimples(porRef,tot,outra){return `${renderFlex(true)}
+  <div class="card stack"><div class="ex-top"><h3>Comi hoje</h3><span class="ctot">${tot} kcal</span></div>${renderVoz()}${porRef?`<div class="tlw${EDIT?' edit':''}">${porRef}</div>`:'<p class="small muted" style="margin:0">Nada ainda.</p>'}</div>
+  ${renderHabitos()}${renderMacros(true)}${renderGuardiao()}${outra}${renderModosD()}`}
 function renderComida(){
   const dt=hoje(),hj=comidas.filter(x=>x.data===dt).sort((a,b)=>a.ts-b.ts),pf0=planoFlex(),slot=pf0&&pf0.linhas[0][0]==='Agora'?pf0.linhas[0][4]:slotDe(hAgora());
   const hm=v=>{const H=Math.floor(v),M=Math.round((v-H)*60);return String(M===60?H+1:H).padStart(2,'0')+':'+String(M===60?0:M).padStart(2,'0')};
   const qf=x=>x.qtd?String(+(+x.qtd).toFixed(1)).replace('.',',')+' '+(x.un||''):'',tot=Math.round(hj.reduce((a,x)=>a+(+x.kcal||0),0));
   const ua0=ls.get('ultimoAdd',null);
   const porRef=[...SLOTS,EXTRA].map(sl=>{const it=hj.filter(x=>(x.ref||slotDe(hCom(x)))===sl[0]);if(!it.length)return null;return {sl,it,h:Math.min(...it.map(hCom)),k:Math.round(it.reduce((a,x)=>a+(+x.kcal||0),0))}}).filter(Boolean).sort((a,b)=>b.h-a.h)
-    .map(g=>`<div class="tl${ua0&&Date.now()-ua0.at<4000&&g.it.some(x=>ua0.ids.includes(x.ts))?' novo':''}"><div class="tlh"><span class="tlt">${fmtH(g.h)}</span><span class="tln">${g.sl[1]}</span><span class="tlk">${g.k} kcal</span></div>${g.it.map(x=>`<div class="tli"><span>${esc(x.nome)}</span><small>${esc(qf(x))}</small><b>${Math.round(x.kcal)}</b>${EDIT?`<button class="xdel" data-del2="${x._id||x.ts}" aria-label="Apagar ${esc(x.nome)}">✕</button>`:''}</div>`).join('')}</div>`).join('');
+    .map(g=>`<div class="tl${ua0&&Date.now()-ua0.at<4000&&g.it.some(x=>ua0.ids.includes(x.ts))?' novo':''}"><div class="tlh"><span class="tlt">${fmtH(g.h)}</span><span class="tln">${g.sl[1]}</span><span class="tlk">${g.k} kcal</span></div>${g.it.map(x=>`<div class="tli"><span>${esc(x.nome)}${soDieta()&&ehEvitar(x.nome)?' <em class="evt">evitar</em>':''}</span><small>${esc(qf(x))}</small><b>${Math.round(x.kcal)}</b>${EDIT?`<button class="xdel" data-del2="${x._id||x.ts}" aria-label="Apagar ${esc(x.nome)}">✕</button>`:''}</div>`).join('')}</div>`).join('');
   const ua=ls.get('ultimoAdd',null),undo=ua&&Date.now()-ua.at<120000&&hj.some(x=>ua.ids.includes(x.ts));
-  return `${renderModosD()}${renderFlex(true)}
+  const _full=`${renderModosD()}${renderFlex(true)}
   <div class="card stack"><div class="ex-top"><h3>Comi hoje</h3><span class="ctot">${tot} kcal</span></div>${renderVoz()}${porRef?`<div class="tlw${EDIT?' edit':''}">${porRef}</div>${EDIT?'<p class="small muted" style="margin:0">Toque no ✕ e confirme em "Apagar".</p>':''}<button class="undo" data-edit="1">${EDIT?'Pronto':'Corrigir um registro'}</button>`:'<p class="small muted">Nada ainda.</p>'}${undo?`<button class="undo" data-undo="1">Desfazer o último registro</button>`:''}</div>
     ${renderMacros(true)}${renderGuardiao()}
   <div class="card stack"><h3>Comi outra coisa</h3>
@@ -1134,7 +1145,8 @@ function renderComida(){
      <button class="btn" style="margin:0">Adicionar</button></form>
     <details class="tip" style="margin:0"><summary>Não está na lista? Informe as kcal</summary><p style="display:flex;gap:8px;align-items:center"><input id="cKcal" inputmode="numeric" placeholder="kcal" class="mini-in"><input id="cProt" inputmode="decimal" placeholder="proteína g" class="mini-in"></p></details>
     <p class="small muted" id="cInfo" style="margin:0"></p></div>
-  ${soDieta()?'':renderTrocador()+renderDieta()}`}
+  ${soDieta()?'':renderTrocador()+renderDieta()}`;
+  if(!soDieta())return _full;const _i=_full.indexOf('<div class="card stack"><h3>Comi outra coisa</h3>');return renderComidaSimples(porRef,tot,_i>=0?_full.slice(_i):'')}
 
 function sugs(inp){const v=norm(inp.value);if(inp.id==='cNome'){const box=$('#cSugs');if(!box)return;const l=v?FOODS.filter(f=>norm(f[0]).includes(v)).slice(0,6):[];
     box.innerHTML=l.map(f=>`<button type="button" data-sug="${f[0]}"><b>${f[0]}</b><span>${f[1]==='un'?'1 '+(f[7]||'un')+' · '+Math.round(f[3]*f[2]/100)+' kcal':Math.round(f[3])+' kcal/100 '+fUn(f)}</span></button>`).join('')}
@@ -1355,6 +1367,70 @@ document.addEventListener('change',async e=>{const t=e.target;
   let j;try{j=JSON.parse(await f.text())}catch(err){toast('Arquivo inválido: não é um JSON');return}
   const er=validarBackup(j);if(er.length){toast(er[0]);return}
   IMP={j,nome:f.name.slice(0,40),R:analisarImport(j)};render();const el=$('#bkCard');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})});
+
+/* ===== Perfil saúde (Carol): hábitos, exames, atividade, evitar, compras ===== */
+const HABITOS=[['feijao','Feijão 2 vezes'],['salada','Salada e legumes'],['frutas','2 a 3 frutas'],['creat','Creatina 3 g'],['semup','Sem ultraprocessado'],['semalc','Sem álcool'],['ativ','Caminhada ou pilates']];
+const EVITAR_RX=/presunto|salsicha|linguica|mortadela|salame|bacon|hamburguer|nugget|bolacha recheada|biscoito recheado|refrigerante|cerveja|vinho|caipirinha|vodka|batata frita|coxinha|pastel|salgadinho|achocolatado|nescau/;
+const ehEvitar=n=>EVITAR_RX.test(nrm(String(n||'')));
+const EXAMES_DEF=[['tgp','TGP',[10,40],'U/L'],['tgo','TGO',[10,40],'U/L'],['ggt','Gama GT',[0,38],'U/L'],['ct','Colesterol total',[0,190],'mg/dL'],['ldl','LDL',[0,115],'mg/dL'],['hdl','HDL',[40,999],'mg/dL']];
+function examesL(){const e=ls.get('exames',null);if(e&&e.length)return e;const ini=perfAtual().examesIni;return ini?[ini]:[]}
+function isoDias(dt,n){const d=new Date(dt+'T12:00:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)}
+function semanaDatas(){const d0=new Date(hoje()+'T12:00:00'),w=(d0.getDay()+6)%7;return Array.from({length:7},(_,i)=>isoDias(hoje(),i-w))}
+function renderHabitos(){const D=getD(hoje()),h=D.hab||{},n=HABITOS.filter(([k])=>h[k]).length,sem=semanaDatas(),min=sem.reduce((a,d)=>a+(+(getD(d).ativMin)||0),0),mh=+D.ativMin||0;
+  return `<div class="card stack"><div class="ex-top"><h3>Hábitos de hoje</h3><span class="pill ${n>=5?'up-g':n>=3?'att':''}">${n} de ${HABITOS.length}</span></div>
+   <div class="habs">${HABITOS.map(([k,l])=>`<button type="button" class="hab${h[k]?' on':''}" data-hab="${k}" aria-pressed="${!!h[k]}"><i>${h[k]?'✓':''}</i>${l}</button>`).join('')}</div>
+   <div class="ativ"><div class="ex-top"><b>Atividade</b><span class="small muted">semana: <b class="ink">${min}</b> de 150 min</span></div>
+    <div class="bar"><i style="width:${Math.min(100,min/150*100)}%;background:${min>=150?'var(--green)':'var(--orange)'}"></i></div>
+    <div class="qbtns">${[15,30,45,60].map(v=>`<button data-ativ="${v}">+${v} min</button>`).join('')}${mh?'<button data-ativ="-15">−15</button>':''}</div>
+    ${mh?`<p class="small muted" style="margin:0">Hoje: ${mh} min</p>`:''}</div></div>`}
+async function togHab(k){const dt=hoje(),D={...getD(dt)},h={...(D.hab||{})};h[k]=!h[k];D.hab=h;await setD(dt,D)}
+async function addAtiv(v){const dt=hoje(),D={...getD(dt)};D.ativMin=Math.max(0,(+D.ativMin||0)+v);const h={...(D.hab||{})};h.ativ=D.ativMin>=20;D.hab=h;await setD(dt,D)}
+function resumoSemanaSaude(){const sem=semanaDatas().filter(d=>d<=hoje()),hab=sem.reduce((a,d)=>a+HABITOS.filter(([k])=>(getD(d).hab||{})[k]).length,0),max=sem.length*HABITOS.length,
+  min=sem.reduce((a,d)=>a+(+(getD(d).ativMin)||0),0),ev=comidas.filter(x=>sem.includes(x.data)&&ehEvitar(x.nome)),evN=[...new Set(ev.map(x=>x.nome))];
+  return `<div class="card stack"><div class="ex-top"><h3>Esta semana</h3><span class="small muted">${fmtD(sem[0])} a ${fmtD(semanaDatas()[6])}</span></div>
+   <div class="sres"><div><b>${max?Math.round(hab/max*100):0}%</b><span>dos hábitos</span></div><div><b>${min}</b><span>de 150 min de atividade</span></div><div><b class="${ev.length?'or':''}">${ev.length}</b><span>itens a evitar</span></div></div>
+   ${ev.length?`<p class="small" style="margin:0;color:var(--orange)">Apareceu: ${evN.map(esc).join(', ')}.</p>`:'<p class="small up-g" style="margin:0">Nenhum item a evitar nesta semana.</p>'}</div>`}
+function renderExames(){const L=examesL().slice().sort((a,b)=>a.data<b.data?-1:1),u=L[L.length-1],a=L.length>1?L[L.length-2]:null;
+  if(!u)return '';const prox=isoDias(u.data,70),st=(k,v)=>{const d=EXAMES_DEF.find(x=>x[0]===k);return v==null?'':(v<d[2][0]||v>d[2][1])?'or':'ok'};
+  return `<div class="card stack" id="exCard"><div class="ex-top"><h3>Meus exames</h3><span class="small muted">${fmtD(u.data)}/${u.data.slice(2,4)}</span></div>
+   <div class="exg">${EXAMES_DEF.map(([k,n,r,un])=>{const hk=L.filter(x=>x[k]!=null),cu=hk[hk.length-1],pa=hk[hk.length-2];if(!cu)return '';const v=cu[k],va=pa?pa[k]:null,a=pa;const dif=va!=null?v-va:null;
+     return `<div class="exi ${st(k,v)}"><span>${n}</span><b>${String(v).replace('.',',')}</b><small>${k==='hdl'?'acima de '+r[0]:k==='ldl'?'meta abaixo de '+r[1]:'até '+r[1]} ${un}</small>${dif!=null?`<em class="${(k==='hdl'?dif>0:dif<0)?'ok':'or'}">${dif>0?'▲':'▼'} ${String(Math.abs(Math.round(dif*10)/10)).replace('.',',')} desde ${fmtD(a.data)}</em>`:''}</div>`}).join('')}</div>
+   <p class="small" style="margin:0"><b>Refazer:</b> por volta de ${fmtD(prox)}/${prox.slice(2,4)}, ou quando o médico pedir.</p>
+   <details class="tip" style="margin:0"><summary>Lançar novo resultado</summary><form id="fExa" class="form m3" style="margin-top:8px"><label style="grid-column:1/-1">Data do exame<input id="exData" type="date" value="${hoje()}"></label>
+    ${EXAMES_DEF.map(([k,n])=>`<label>${n}<input id="ex_${k}" inputmode="decimal" placeholder="—"></label>`).join('')}<button class="btn" style="grid-column:1/-1;margin:0">Salvar resultado</button></form></details>
+   <p class="small muted" style="margin:0">Procure atendimento logo se aparecer olho amarelado, urina muito escura ou dor forte na barriga. Referências usuais; confira as do laudo.</p></div>`}
+function renderCintura(){const ms=medidas.filter(m=>m.cintura!=null).slice().sort((a,b)=>a.data<b.data?-1:1);if(!ms.length)return '';const u=ms[ms.length-1],p=ms[0],d=Math.round((u.cintura-p.cintura)*10)/10;
+  return `<div class="cint"><div><span>Cintura</span><b>${String(u.cintura).replace('.',',')} cm</b></div>${ms.length>1?`<em class="${d<=0?'ok':'or'}">${d>0?'+':d<0?'−':''}${String(Math.abs(d)).replace('.',',')} cm desde ${fmtD(p.data)}</em>`:'<em>primeira medida</em>'}</div>`}
+/* lista de compras */
+function lsRaw(k){try{const v=localStorage.getItem(k);return v==null?null:JSON.parse(v)}catch(e){return null}}
+function dietaJean(){const c=lsRaw('dietaCustom');if(c&&c.length)return c.map(m=>m[2]);const md=lsRaw('modo')||'hiper';return (PLANOS[md]||PLANOS.hiper).map(m=>m[2])}
+function listaCompras(incl){const tot={},add=(txts,f)=>txts.forEach(t=>t.split(' + ').forEach(p=>{const pp=p.split(' ou ')[0];itemFood(pp).forEach(it=>{const k=it.nome;tot[k]=tot[k]||{g:0,un:0,uLab:it.un};if(['g','ml'].includes(it.un))tot[k].g+=it.qtd*f;else{tot[k].un+=it.qtd*f;tot[k].g+=(+it.g||0)*f}})}));
+  add(dietaBase().map(m=>m[2]),7);if(incl)add(dietaJean(),7);
+  const R=[],fmtKg=g=>g>=1000?String(Math.ceil(g/250)*0.25).replace('.',',')+' kg':Math.ceil(g/50)*50+' g',fmtL=ml=>String(Math.ceil(ml/1000))+' L';
+  const regra={'Ovos':v=>Math.ceil(v.un/12)+' dúzias ('+Math.round(v.un)+' ovos)','Ovo cozido':v=>Math.ceil(v.un/12)+' dúzias','Ovo mexido':v=>Math.ceil(v.g/50/12)+' dúzias','Frango grelhado':v=>fmtKg(v.g*1.35)+' cru','Arroz':v=>fmtKg(v.g/2.5)+' cru','Feijão':v=>fmtKg(v.g/2.5)+' cru',
+    'Leite desnatado':v=>fmtL(v.g),'Leite integral':v=>fmtL(v.g),'Aveia':v=>fmtKg(v.g),'Mussarela':v=>fmtKg(v.g)+' fatiada','Manteiga':v=>fmtKg(v.g),'Whey':v=>Math.round(v.g)+' g (confira o estoque)','Iogurte natural':v=>Math.ceil(v.un)+' potes','Sardinha em lata':v=>Math.max(2,Math.ceil(v.un))+' a 4 latas','Pão francês':v=>Math.ceil(v.un)+' pães (na padaria, 2 vezes na semana)'};
+  const grupo=n=>/ovo|frango|sardinha|carne|peixe|mussarela/i.test(n)?'Proteínas':/leite|iogurte|queijo|manteiga/i.test(n)?'Laticínios':/banana|maca|maçã|laranja|uva|mamao|mamão|pera/i.test(n)?'Frutas':/salada|legume/i.test(n)?'Salada e legumes':/p[aã]o/i.test(n)?'Padaria':'Outros';
+  const ovos=['Ovos','Ovo cozido','Ovo mexido'].reduce((a,k)=>a+(tot[k]?(tot[k].un||tot[k].g/50):0),0);['Ovos','Ovo cozido','Ovo mexido'].forEach(k=>delete tot[k]);if(ovos)R.push(['Proteínas','Ovos',Math.ceil(ovos/12)+' dúzias ('+Math.round(ovos)+' ovos)']);
+  Object.entries(tot).forEach(([n,v])=>{if(/^(Salada|Legumes|Café.*|Arroz.*|Feijão|Macarrão|Aveia|Whey|Manteiga|Açúcar|Azeite)$/.test(n))return;const q=regra[n]?regra[n](v):v.un?Math.ceil(v.un)+' '+(v.uLab==='un'?'un':v.uLab):fmtKg(v.g);R.push([grupo(n),n,q])});
+  if(!R.some(x=>x[1]==='Sardinha em lata'))R.push(['Proteínas','Sardinha em lata','2 a 4 latas']);
+  R.forEach(x=>{if(x[1]==='Frango grelhado')x[1]='Peito de frango'});
+  const nS=Math.max(7,(tot['Salada']||{un:0}).un),gL=Math.max(700,(tot['Legumes']||{g:0}).g);
+  R.push(['Salada e legumes','Alface, rúcula ou couve',Math.ceil(nS/7)+(Math.ceil(nS/7)>1?' pés ou maços':' pé ou maço')]);R.push(['Salada e legumes','Tomate',fmtKg(nS*100)]);R.push(['Salada e legumes','Cenoura',fmtKg(nS*40)]);R.push(['Salada e legumes','Pepino',Math.ceil(nS/4)+' un']);
+  R.push(['Salada e legumes','Legumes: abobrinha, chuchu, brócolis, beterraba',fmtKg(gL)+' no total (varie)']);R.push(['Salada e legumes','Limão e cheiro-verde','para temperar']);
+  const ord=['Frutas','Salada e legumes','Proteínas','Laticínios','Padaria','Outros'];return R.sort((a,b)=>ord.indexOf(a[0])-ord.indexOf(b[0]))}
+let COMPRA_J=true;
+function renderCompras(){const R=listaCompras(COMPRA_J),ck=(ls.get('compraOk',{})||{}),sem=semanaDatas()[0],ok=ck.s===sem?ck:{s:sem};let g='';
+  return `<div class="card stack" id="cmpCard"><div class="ex-top"><h3>Lista de compras</h3><span class="small muted">7 dias</span></div>
+   <label class="bkc" style="background:transparent;padding:0"><input type="checkbox" data-cmpj="1"${COMPRA_J?' checked':''}><span>Incluir o cardápio do Jean</span></label>
+   <div class="cmp">${R.map(([gr,n,q])=>{const h=gr!==g?`<h4>${gr}</h4>`:'';g=gr;const k=nrm(n);return h+`<button type="button" class="ci${ok[k]?' on':''}" data-cmp="${esc(k)}"><i>${ok[k]?'✓':''}</i><span>${esc(n)}</span><b>${esc(q)}</b></button>`}).join('')}</div>
+   <p class="small muted" style="margin:0">Só o que é da semana. Arroz, feijão, macarrão, aveia e café ficam na compra do mês. Toque para marcar o que já pegou.</p></div>`}
+document.addEventListener('click',e=>{const t=e.target;let b;
+  if(b=t.closest('[data-hab]')){togHab(b.dataset.hab);return}
+  if(b=t.closest('[data-ativ]')){addAtiv(+b.dataset.ativ);return}
+  if(b=t.closest('[data-cmp]')){const sem=semanaDatas()[0],c=ls.get('compraOk',{});const o=c&&c.s===sem?c:{s:sem};o[b.dataset.cmp]=!o[b.dataset.cmp];ls.set('compraOk',o);render();return}});
+document.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.cmpj){COMPRA_J=e.target.checked;render()}});
+document.addEventListener('submit',e=>{if(e.target.id!=='fExa')return;e.preventDefault();const o={data:$('#exData').value||hoje()};let n=0;EXAMES_DEF.forEach(([k])=>{const v=parseFloat((($('#ex_'+k)||{}).value||'').replace(',','.'));if(isFinite(v)){o[k]=v;n++}});
+  if(!n){toast('Preencha pelo menos um exame');return}const L=examesL().filter(x=>x.data!==o.data);L.push(o);ls.set('exames',L);render();toast('Exame salvo')});
 
 /* ===== Voz ===== */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let VOZ=null,REC=null;
