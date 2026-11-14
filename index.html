@@ -699,7 +699,7 @@ document.addEventListener('click',e=>{const t=e.target;
   if(t.closest('[data-edrm]')){t.closest('.edr').remove();return}
   if(t.closest('[data-edadd]')){const b=t.closest('[data-edadd]'),d=document.createElement('div');d.className='edr';d.innerHTML='<input placeholder="ex.: 2 ovos"><button type="button" data-edrm="1" aria-label="Remover">✕</button>';b.before(d);d.querySelector('input').focus();return}
   const sv=t.closest('[data-edsave]');if(sv){salvarEditado(sv.dataset.edsave);return}});
-const ALIAS=[[/sardinha/,'Sardinha em lata'],[/chia/,'Chia'],[/grao.de.bico/,'Grão-de-bico'],[/patinho|carne moida/,'Carne moída'],[/amendoim/,'Amendoim'],[/tilapia/,'Tilápia'],[/whey/,'Whey'],[/leite integral/,'Leite integral'],[/manteiga/,'Manteiga'],[/leite/,'Leite desnatado'],[/aveia/,'Aveia'],[/banana/,'Banana'],[/frango/,'Frango grelhado'],[/arroz/,'Arroz'],[/feijao/,'Feijão'],[/pao integral/,'Pão integral'],[/mussarela/,'Mussarela'],[/ovo|omelete/,'Ovo cozido'],[/maca|fruta/,'Maçã'],[/mamao/,'Mamão'],[/laranja/,'Laranja'],[/batata/,'Batata doce'],[/legume/,'Legumes'],[/salada/,'Salada'],[/azeite/,'Azeite'],[/atum/,'Atum em lata'],[/iogurte/,'Iogurte natural'],[/cuscuz/,'Cuscuz'],[/tapioca/,'Tapioca'],[/pao frances/,'Pão francês'],[/tilapia/,'Tilápia'],[/carne|patinho/,'Patinho'],[/queijo branco/,'Queijo branco']];
+const ALIAS=[[/sardinha/,'Sardinha em lata'],[/chia/,'Chia'],[/grao.de.bico/,'Grão-de-bico'],[/patinho|carne moida/,'Carne moída'],[/amendoim/,'Amendoim'],[/tilapia/,'Tilápia'],[/merluza/,'Merluza'],[/whey/,'Whey'],[/leite integral/,'Leite integral'],[/manteiga/,'Manteiga'],[/leite/,'Leite desnatado'],[/aveia/,'Aveia'],[/banana/,'Banana'],[/frango/,'Frango grelhado'],[/arroz/,'Arroz'],[/feijao/,'Feijão'],[/pao integral/,'Pão integral'],[/mussarela/,'Mussarela'],[/ovo|omelete/,'Ovo cozido'],[/maca|fruta/,'Maçã'],[/mamao/,'Mamão'],[/laranja/,'Laranja'],[/batata/,'Batata doce'],[/legume/,'Legumes'],[/salada/,'Salada'],[/azeite/,'Azeite'],[/atum/,'Atum em lata'],[/iogurte/,'Iogurte natural'],[/cuscuz/,'Cuscuz'],[/tapioca/,'Tapioca'],[/pao frances/,'Pão francês'],[/tilapia/,'Tilápia'],[/carne|patinho/,'Patinho'],[/queijo branco/,'Queijo branco']];
 function itemFood(p){let t=nrm(p.split(' ou ')[0]).replace(/\(.*?\)/g,'').trim(),fat=1;if(/^cafe com/.test(t))t=t.replace(/^cafe com\s*/,'');
   const parts=t.split(/\s+(?:com|e)\s+(?=\d)/),out=[];
   parts.forEach(x=>{if(/colher de cha/.test(x))fat=1/3;const m=x.match(/(\d+(?:[.,]\d+)?)\s*(g|ml)?\b\s*(.*)$/),q=m?parseFloat(m[1].replace(',','.')):null,u=m&&m[2]?m[2]:'un',nome=m?m[3]:x;
@@ -1094,7 +1094,7 @@ const FOODS=[
 ["Batata doce","g",0,77,0.6,18.4,0.1],["Batata","g",0,52,1.2,11.9,0],["Cuscuz","g",0,113,2.2,25.3,0.7],["Tapioca","un",60,240,0,59,0,"un"],["Pão francês","un",50,300,8,58.6,3.1,"un"],
 ["Pão integral","un",25,253,9.4,49.9,3.7,"fatia"],["Mussarela","un",20,330,22.6,3,25.2,"fatia"],["Queijo branco","un",30,264,17.4,3.2,20.2,"fatia"],["Presunto","un",15,94,14.3,2.1,2.7,"fatia"],
 ["Leite desnatado","ml",0,35,3.4,4.9,0.1],["Leite integral","ml",0,61,3.2,4.7,3.3],["Manteiga","g",0,726,0.4,0.1,82.4,"",10],["Café com leite","ml",0,30,1.6,2.4,1.6],["Café preto","ml",0,2,0.1,0,0],
-["Iogurte natural","un",170,61,3.5,4.7,3.3,"pote"],["Chia","g",0,486,16.5,42,30.7],["Grão-de-bico","g",0,164,8.9,27.4,2.6],["Sardinha em lata","un",84,208,24.6,0,11.5,"lata"],["Whey","un",30,390,83.3,6.7,3.3,"scoop"],["Aveia","g",0,394,13.9,66.6,8.5,"colher",15],["Pasta de amendoim","un",15,620,26,18,50,"colher"],
+["Iogurte natural","un",170,61,3.5,4.7,3.3,"pote"],["Chia","g",0,486,16.5,42,30.7],["Merluza","g",0,122,26.6,0,0.9],["Grão-de-bico","g",0,164,8.9,27.4,2.6],["Sardinha em lata","un",84,208,24.6,0,11.5,"lata"],["Whey","un",30,390,83.3,6.7,3.3,"scoop"],["Aveia","g",0,394,13.9,66.6,8.5,"colher",15],["Pasta de amendoim","un",15,620,26,18,50,"colher"],
 ["Amendoim","g",0,567,26,16,49],["Salada","un",100,15,1.3,2.5,0.2,"prato"],["Legumes","g",0,35,1.5,7,0.3],["Azeite","un",13,884,0,0,100,"colher"],
 ["Pão de queijo","un",25,363,5.1,34,24,"un"],["Coxinha","un",100,290,9,29,15,"un"],["Salgado assado","un",80,300,8,38,13,"un"],["Pizza","un",110,260,11,30,10,"fatia"],
 ["Hambúrguer","un",200,255,13,25,11,"un"],["Batata frita","g",0,312,3.4,41,15],["Refrigerante","ml",0,42,0,10.6,0],["Suco de laranja","ml",0,45,0.7,10.4,0.2],["Cerveja","ml",0,43,0.5,3.6,0],
@@ -1172,7 +1172,7 @@ function treinoC(){return ls.get('treinoCustom',null)}
 function perfAtual(){try{return perfis()[PERF]||{}}catch(e){return {}}}
 function soDieta(){return !!perfAtual().soDieta}
 
-const VAR_ALM={0:'120 g de frango',1:'120 g de frango',2:'100 g de patinho moído',3:'1 lata de sardinha',4:'120 g de frango',5:'150 g de tilápia',6:'1 lata de sardinha'};
+const VAR_ALM={0:'120 g de frango',1:'120 g de frango',2:'100 g de patinho moído',3:'1 lata de sardinha',4:'120 g de frango',5:'150 g de tilápia ou 150 g de merluza',6:'1 lata de sardinha'};
 const DOW_N=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 function variar(ref,dow){return ref.map(m=>{let [h,n,t,sl]=m;
   if(sl==='almoco'){t=t.replace('120 g de frango',VAR_ALM[dow]);if(dow===6)t=t.replace('1 concha de feijão','100 g de grão-de-bico');if(!/azeite/.test(t))t=t.replace(/ \+ 1 laranja$|$/,m0=>' + 1 colher de chá de azeite'+m0)}
