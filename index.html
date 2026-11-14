@@ -446,13 +446,14 @@ const ALT=[
   {id:'a_prancha_l',n:'Prancha lateral',q:'prancha lateral execução correta',s:2,r:[20,40],d:20,bw:1,t:1,o:'Cada lado.'}]},
 ];
 const PERFIL_PADRAO={jean:{nome:'Jean',sexo:'m',idade:33,altura:173,peso:80,gord:26,bmr:1573,data:'2026-11-02'},max:{nome:'Max'},patrick:{nome:'Patrick'},carol:{nome:'Carol',sexo:'f',idade:32,altura:157,peso:60,data:'2026-11-14',soDieta:1,modoPadrao:'equilibrada',
+  agua:[[5.67,250],[7,200],[8.83,250],[10,250],[11.5,200],[13,300],[14.5,250],[16,250],[17.5,200],[19,150]],
   dietas:{
-   leve:{nome:'Leve',sub:'perder gordura',meta:{kcal:1400,P:105,G:45},ref:[['6h30','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['9h','Lanche','1 iogurte natural + 1 maçã','pos'],
-     ['11h30','Almoço','80 g de arroz + 1 concha de feijão + 150 g de frango + salada','almoco'],['17h','Café reforçado','1 pão francês + 80 g de frango ou 2 ovos cozidos + salada + 200 ml de leite desnatado','lanche2'],['20h30','Noite (só se tiver fome)','1 laranja','jantar']]},
-   equilibrada:{nome:'Equilibrada',sub:'melhorar exames',meta:{kcal:1600,P:110,G:50},ref:[['6h30','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['9h','Lanche','200 ml de leite desnatado + 1 banana + 30 g de aveia','pos'],
-     ['11h30','Almoço','100 g de arroz + 1 concha de feijão + 150 g de frango + salada + 1 laranja','almoco'],['17h','Café reforçado','1 pão francês + 100 g de frango ou 2 ovos cozidos + salada + 200 ml de leite desnatado','lanche2'],['20h30','Noite (só se tiver fome)','1 iogurte natural','jantar']]},
-   manter:{nome:'Manter',sub:'manter o peso',meta:{kcal:1850,P:110,G:55},ref:[['6h30','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['9h','Lanche','200 ml de leite desnatado + 1 banana + 30 g de aveia','pos'],
-     ['11h30','Almoço','120 g de arroz + 1 concha de feijão + 150 g de frango + salada + 1 laranja','almoco'],['17h','Café reforçado','1 pão francês + 100 g de frango ou 2 ovos cozidos + salada + 200 ml de leite desnatado','lanche2'],['20h30','Jantar leve','60 g de arroz + 1 concha de feijão + 100 g de frango ou 1 lata de sardinha + legumes','jantar']]}}}};
+   leve:{nome:'Leve',sub:'perder gordura',meta:{kcal:1400,P:105,G:45},ref:[['5h40','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['8h50','Lanche','1 iogurte natural + 1 maçã','pos'],
+     ['11h30','Almoço','80 g de arroz + 1 concha de feijão + 150 g de frango + salada','almoco'],['17h30','Café reforçado','1 pão francês + 80 g de frango ou 2 ovos cozidos + salada + 200 ml de leite desnatado','lanche2'],['20h','Noite (só se tiver fome)','1 laranja','jantar']]},
+   equilibrada:{nome:'Equilibrada',sub:'melhorar exames',meta:{kcal:1600,P:110,G:50},ref:[['5h40','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['8h50','Lanche','200 ml de leite desnatado + 1 banana + 30 g de aveia','pos'],
+     ['11h30','Almoço','100 g de arroz + 1 concha de feijão + 150 g de frango + salada + 1 laranja','almoco'],['17h30','Café reforçado','1 pão francês + 100 g de frango ou 2 ovos cozidos + salada + 200 ml de leite desnatado','lanche2'],['20h','Noite (só se tiver fome)','1 iogurte natural','jantar']]},
+   manter:{nome:'Manter',sub:'manter o peso',meta:{kcal:1850,P:110,G:55},ref:[['5h40','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['8h50','Lanche','200 ml de leite desnatado + 1 banana + 30 g de aveia','pos'],
+     ['11h30','Almoço','120 g de arroz + 1 concha de feijão + 150 g de frango + salada + 1 laranja','almoco'],['17h30','Café reforçado','1 pão francês + 100 g de frango ou 2 ovos cozidos + salada + 200 ml de leite desnatado','lanche2'],['20h','Jantar leve','60 g de arroz + 1 concha de feijão + 100 g de frango ou 1 lata de sardinha + legumes','jantar']]}}}};
 let BASE={data:'2026-11-02',peso:80,gord:26,altura:173,sexo:'m',idade:33};
 
 /* ---------------- Estado ---------------- */
@@ -648,7 +649,7 @@ function horarios(){const h=hAgora(),dl=comidas.filter(x=>x.data===hoje()),eaten
   return rest.map((s,i)=>({s,t:n>1?q(t0+i*(end-t0)/(n-1)):(s[0]==='jantar'?Math.max(t0,Math.min(19.5,end)):t0)}))}
 let _memo={};function memo(k,f){return k in _memo?_memo[k]:(_memo[k]=f())}
 function planoFlex(){return memo('pf',()=>{const p=planoFlex0(),c=dietaC();if(!c)return p;const by={};c.forEach(m=>{if(!by[m[3]])by[m[3]]=m});
-  const L=p?p.linhas.filter(l=>by[l[4]]&&l[4]!=='extra').map(l=>{const m=by[l[4]];return [l[0],m[1],m[2],Math.round(kcalItens(m[2].split(' + '))),l[4]]}):[];
+  const L=p?p.linhas.filter(l=>by[l[4]]&&l[4]!=='extra').map(l=>{const m=by[l[4]];return [l[0]==='Agora'?'Agora':m[0],m[1],m[2],Math.round(kcalItens(m[2].split(' + '))),l[4]]}):[];
   const ex=by.extra,h=hAgora(),comeu=comidas.some(x=>x.data===hoje()&&x.ref==='extra');if(ex&&!comeu&&hNum(ex[0])+1>=h)L.push([hNum(ex[0])<=h+0.05?'Agora':ex[0],ex[1],ex[2],Math.round(kcalItens(ex[2].split(' + '))),'extra']);
   L.sort((a,b)=>(a[0]==='Agora'?-1:hNum(a[0]))-(b[0]==='Agora'?-1:hNum(b[0])));
   if(!L.length)return p&&p.linhas.length?{R:p.R,linhas:[]}:null;let R=p&&p.R;if(!R){const T=METAS(),M=macrosHoje();R={P:Math.max(0,T.P-M.P),C:Math.max(0,T.C-M.C),G:Math.max(0,T.G-(M.G||0)),k:Math.max(0,T.kcal-M.kcal)}}return {R,linhas:L}})}
@@ -1687,7 +1688,7 @@ function aplicarPerfil(){aplicarPlano();const P=perfis()[PERF]||{},sx=P.sexo||'m
   let gd=P.gord!=null&&P.gord!==''?+P.gord:null;if(gd==null)gd=c?Math.round(((sx==='f'?76:64)-20*alt/c)*10)/10:(sx==='f'?30:22);
   BASE={data:P.data||hoje(),peso,gord:gd,altura:alt,sexo:sx,idade:id};
   BMR=+P.bmr||Math.round(370+21.6*peso*(1-gd/100));TDEE0=PERF==='jean'&&+P.bmr===1573?2300:Math.round(BMR*1.46/50)*50;PF=peso/80;
-  AGUA_META=Math.round((35*peso+200)/100)*100;const f=AGUA_META/3000;AGUA_PLANO=AGUA_BASE.map(([h,ml])=>[h,Math.round(ml*f/50)*50]);
+  if(Array.isArray(P.agua)&&P.agua.length){AGUA_PLANO=P.agua;AGUA_META=P.agua.reduce((a,x)=>a+x[1],0)}else{AGUA_META=Math.round((35*peso+200)/100)*100;const f=AGUA_META/3000;AGUA_PLANO=AGUA_BASE.map(([h,ml])=>[h,Math.round(ml*f/50)*50])}
   fat0=peso*gd/100;lean0=peso-fat0;
   const pi=$('#perfInfo'),pb=$('#perfBtn');if(pi)pi.textContent=perfilPronto()?String(peso).replace('.',',')+' kg · '+String(gd).replace('.',',')+'% gordura':'';if(pb)pb.textContent=(P.nome||'Novo')+' ▾'}
 function renderPerfMenu(){const p=perfis();return Object.entries(p).map(([k,v])=>`<button data-perf="${k}" class="${k===PERF?'on':''}">${esc(v.nome||'Novo perfil')}${k===PERF?' ✓':''}</button>`).join('')+
