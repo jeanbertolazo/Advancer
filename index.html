@@ -46,6 +46,7 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 header.top .small{white-space:nowrap}
 
 .seg{display:grid;gap:2px;padding:3px;background:var(--segbg);border-radius:10px}
+nav.tabs.so2{grid-template-columns:repeat(2,1fr)}
 nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;grid-template-columns:repeat(4,1fr);margin-bottom:6px;outline:6px solid var(--bg)}
 nav.tabs a,.dseg{font:600 .8rem var(--font);text-align:center;padding:8px 2px;border-radius:8px;color:var(--muted);text-decoration:none;border:none;background:transparent;cursor:pointer;position:relative;white-space:nowrap}
 nav.tabs a[aria-current="page"]{background:var(--orange);color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(234,106,18,.35)}
@@ -444,7 +445,14 @@ const ALT=[
   {id:'a_pant_s',n:'Panturrilha no degrau',q:'panturrilha unilateral no degrau em casa',s:3,r:[12,20],d:30,bw:1,uni:1},
   {id:'a_prancha_l',n:'Prancha lateral',q:'prancha lateral execução correta',s:2,r:[20,40],d:20,bw:1,t:1,o:'Cada lado.'}]},
 ];
-const PERFIL_PADRAO={jean:{nome:'Jean',sexo:'m',idade:33,altura:173,peso:80,gord:26,bmr:1573,data:'2026-11-02'},max:{nome:'Max'},patrick:{nome:'Patrick'}};
+const PERFIL_PADRAO={jean:{nome:'Jean',sexo:'m',idade:33,altura:173,peso:80,gord:26,bmr:1573,data:'2026-11-02'},max:{nome:'Max'},patrick:{nome:'Patrick'},carol:{nome:'Carol',sexo:'f',idade:32,altura:157,peso:60,data:'2026-11-14',soDieta:1,modoPadrao:'equilibrada',
+  dietas:{
+   leve:{nome:'Leve',sub:'perder gordura',meta:{kcal:1400,P:105,G:45},ref:[['6h30','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['9h','Lanche','1 iogurte natural + 1 maçã','pos'],
+     ['11h30','Almoço','80 g de arroz + 1 concha de feijão + 150 g de frango + salada','almoco'],['17h','Café reforçado','1 pão francês + 80 g de frango ou 2 ovos cozidos + salada + 200 ml de leite desnatado','lanche2'],['20h30','Noite (só se tiver fome)','1 laranja','jantar']]},
+   equilibrada:{nome:'Equilibrada',sub:'melhorar exames',meta:{kcal:1600,P:110,G:50},ref:[['6h30','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['9h','Lanche','200 ml de leite desnatado + 1 banana + 30 g de aveia','pos'],
+     ['11h30','Almoço','100 g de arroz + 1 concha de feijão + 150 g de frango + salada + 1 laranja','almoco'],['17h','Café reforçado','1 pão francês + 100 g de frango ou 2 ovos cozidos + salada + 200 ml de leite desnatado','lanche2'],['20h30','Noite (só se tiver fome)','1 iogurte natural','jantar']]},
+   manter:{nome:'Manter',sub:'manter o peso',meta:{kcal:1850,P:110,G:55},ref:[['6h30','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['9h','Lanche','200 ml de leite desnatado + 1 banana + 30 g de aveia','pos'],
+     ['11h30','Almoço','120 g de arroz + 1 concha de feijão + 150 g de frango + salada + 1 laranja','almoco'],['17h','Café reforçado','1 pão francês + 100 g de frango ou 2 ovos cozidos + salada + 200 ml de leite desnatado','lanche2'],['20h30','Jantar leve','60 g de arroz + 1 concha de feijão + 100 g de frango ou 1 lata de sardinha + legumes','jantar']]}}}};
 let BASE={data:'2026-11-02',peso:80,gord:26,altura:173,sexo:'m',idade:33};
 
 /* ---------------- Estado ---------------- */
@@ -681,7 +689,7 @@ document.addEventListener('click',e=>{const t=e.target;
   if(t.closest('[data-edrm]')){t.closest('.edr').remove();return}
   if(t.closest('[data-edadd]')){const b=t.closest('[data-edadd]'),d=document.createElement('div');d.className='edr';d.innerHTML='<input placeholder="ex.: 2 ovos"><button type="button" data-edrm="1" aria-label="Remover">✕</button>';b.before(d);d.querySelector('input').focus();return}
   const sv=t.closest('[data-edsave]');if(sv){salvarEditado(sv.dataset.edsave);return}});
-const ALIAS=[[/whey/,'Whey'],[/leite integral/,'Leite integral'],[/manteiga/,'Manteiga'],[/leite/,'Leite desnatado'],[/aveia/,'Aveia'],[/banana/,'Banana'],[/frango/,'Frango grelhado'],[/arroz/,'Arroz'],[/feijao/,'Feijão'],[/pao integral/,'Pão integral'],[/mussarela/,'Mussarela'],[/ovo|omelete/,'Ovo cozido'],[/maca|fruta/,'Maçã'],[/mamao/,'Mamão'],[/laranja/,'Laranja'],[/batata/,'Batata doce'],[/legume/,'Legumes'],[/salada/,'Salada'],[/azeite/,'Azeite'],[/atum/,'Atum em lata'],[/iogurte/,'Iogurte natural'],[/cuscuz/,'Cuscuz'],[/tapioca/,'Tapioca'],[/pao frances/,'Pão francês'],[/tilapia/,'Tilápia'],[/carne|patinho/,'Patinho'],[/queijo branco/,'Queijo branco']];
+const ALIAS=[[/sardinha/,'Sardinha em lata'],[/whey/,'Whey'],[/leite integral/,'Leite integral'],[/manteiga/,'Manteiga'],[/leite/,'Leite desnatado'],[/aveia/,'Aveia'],[/banana/,'Banana'],[/frango/,'Frango grelhado'],[/arroz/,'Arroz'],[/feijao/,'Feijão'],[/pao integral/,'Pão integral'],[/mussarela/,'Mussarela'],[/ovo|omelete/,'Ovo cozido'],[/maca|fruta/,'Maçã'],[/mamao/,'Mamão'],[/laranja/,'Laranja'],[/batata/,'Batata doce'],[/legume/,'Legumes'],[/salada/,'Salada'],[/azeite/,'Azeite'],[/atum/,'Atum em lata'],[/iogurte/,'Iogurte natural'],[/cuscuz/,'Cuscuz'],[/tapioca/,'Tapioca'],[/pao frances/,'Pão francês'],[/tilapia/,'Tilápia'],[/carne|patinho/,'Patinho'],[/queijo branco/,'Queijo branco']];
 function itemFood(p){let t=nrm(p.split(' ou ')[0]).replace(/\(.*?\)/g,'').trim(),fat=1;if(/^cafe com/.test(t))t=t.replace(/^cafe com\s*/,'');
   const parts=t.split(/\s+(?:com|e)\s+(?=\d)/),out=[];
   parts.forEach(x=>{if(/colher de cha/.test(x))fat=1/3;const m=x.match(/(\d+(?:[.,]\d+)?)\s*(g|ml)?\b\s*(.*)$/),q=m?parseFloat(m[1].replace(',','.')):null,u=m&&m[2]?m[2]:'un',nome=m?m[3]:x;
@@ -901,7 +909,7 @@ const medCard=`<div class="card stack"><div class="ex-top"><h3>Medidas</h3><span
    <span class="lbl" style="margin-top:4px">Últimos treinos</span><div class="hist">${sesL}</div></div>`;
   const byWeek={};medidas.forEach(m=>{const w=weekOf(m.data);byWeek[w]=m});let rows='';
   for(let n=1;n<=12;n++){const m=proj(n,.3,.12),me=byWeek[n],bf=me&&navy(me.cintura);rows+=`<tr class="${n===8?'mile':''}${n===semanaAtual()?' now':''}"><td>${n}${n===8?' · InBody':''}</td><td>${m.bf.toFixed(1).replace('.',',')}%</td><td class="meas">${me&&me.peso?String(me.peso).replace('.',','):'–'}</td><td class="meas">${bf?bf.toFixed(1).replace('.',',')+'%':'–'}</td></tr>`}
-  return '<button class="undo ajp" data-perfedit="1">Ajustar meu plano (dados, dieta e treino)</button>'+renderCheckin()+resumo+renderMeuPlano()+renderBackup()+renderCal()+medCard+renderCorpo()+semCard+renderCarga()+renderAnalise(true)+
+  return '<button class="undo ajp" data-perfedit="1">Ajustar meu plano (dados, dieta e treino)</button>'+renderCheckin()+resumo+renderMeuPlano()+renderBackup()+renderCal()+medCard+renderCorpo()+(soDieta()?'':semCard+renderCarga())+renderAnalise(true)+
   `<div class="card stack"><h3>Projeção de gordura · 12 semanas</h3><div class="chart">${renderChart()}</div><div class="legend"><span><i style="background:var(--orange)"></i>Previsto</span><span><i style="background:var(--ink)"></i>Você</span></div></div>
   <div class="tbl"><table style="min-width:0"><thead><tr><th>Sem.</th><th>Previsto</th><th>Seu peso</th><th>Seu %</th></tr></thead><tbody>${rows}</tbody></table></div>
   <details class="tip"><summary>Como ler</summary><p>Gasto = metabolismo (${BMR.toLocaleString('pt-BR')} kcal × 1,2) + treinos; saldo = comido − gasto; 7.700 kcal = 1 kg de gordura; músculo ≈ 20 g por treino de força. A esteira é bônus: a projeção não depende dela. O % pela cintura (fórmula RFM) tem margem de ±3%. Recuperação considera quantas séries cada músculo fez nas últimas 72 h; exercícios de casa contam menos.</p></details>`}
@@ -1012,7 +1020,7 @@ function treinoDia(){const dt=hoje(),h=hAgora(),w=new Date().getDay(),util=w>0&&
   const k=feito+prev,aj=Math.max(-400,Math.min(400,Math.round((k-media)/50)*50));
   return {lbl,feito,prev,k,media,aj}}
 function METAS(){return memo('metas',METAS0)}
-function METAS0(){const m=MODOS[modo()],a=tdeeAdapt(),td=treinoDia(),k=Math.max(1600,Math.min(3200,Math.round(((a?a.tdee:TDEE0)+m.d+td.aj+(+ls.get('ajKcal',0)||0))/50)*50));const P=Math.round(m.P*PF/5)*5,G=Math.round(m.G*PF/5)*5;return {kcal:k,P,G,C:Math.max(100,Math.round((k-P*4-G*9)/4)),agua:AGUA_META}}
+function METAS0(){const _m=modoD(),mf=_m?perfAtual().dietas[_m].meta:perfAtual().meta;if(mf){const k=mf.kcal,P=mf.P,G=mf.G;return {kcal:k,P,G,C:Math.max(100,Math.round((k-P*4-G*9)/4)),agua:AGUA_META}}const m=MODOS[modo()],a=tdeeAdapt(),td=treinoDia(),k=Math.max(1600,Math.min(3200,Math.round(((a?a.tdee:TDEE0)+m.d+td.aj+(+ls.get('ajKcal',0)||0))/50)*50));const P=Math.round(m.P*PF/5)*5,G=Math.round(m.G*PF/5)*5;return {kcal:k,P,G,C:Math.max(100,Math.round((k-P*4-G*9)/4)),agua:AGUA_META}}
 const EXTRA=['extra','Lanche extra',17,.12];
 const SLOTS=[['cafe','Café da manhã',5,.08],['pos','Pós-treino',7,.20],['lanche1','Lanche',10,.13],['almoco','Almoço',13.5,.27],['lanche2','Lanche da tarde',16,.15],['jantar','Jantar',19.5,.17]];
 function hAgora(){const n=new Date();return n.getHours()+n.getMinutes()/60}
@@ -1045,7 +1053,7 @@ function barra(nome,v,t,un,cor){const p=t?Math.min(100,v/t*100):0,over=v>t*1.05,
 function renderMacros(dicas){const T=METAS(),M=macrosHoje(),fK=T.kcal-M.kcal;
   const st=fK<0?['Passou da meta','bad']:fK<200?['Quase lá','att']:['No ritmo','up-g'];
   return `<div class="card stack"><div class="ex-top"><h3>Hoje</h3><span class="pill ${st[1]}">${st[0]}</span></div>
-   ${(()=>{const t=treinoDia();const aw=+ls.get('ajKcal',0)||0;return `<p class="small muted" style="margin:0">${t.lbl}${t.aj?` · meta ${t.aj>0?'+':'−'}${Math.abs(t.aj)} kcal`:''}${aw?` · ajuste do check-in ${aw>0?'+':'−'}${Math.abs(aw)} kcal`:''}</p>`})()}
+   ${soDieta()?'':(()=>{const t=treinoDia();const aw=+ls.get('ajKcal',0)||0;return `<p class="small muted" style="margin:0">${t.lbl}${t.aj?` · meta ${t.aj>0?'+':'−'}${Math.abs(t.aj)} kcal`:''}${aw?` · ajuste do check-in ${aw>0?'+':'−'}${Math.abs(aw)} kcal`:''}</p>`})()}
    <div class="kbig"><b>${Math.max(0,Math.round(fK)).toLocaleString('pt-BR')}</b><span>kcal faltam · comeu ${Math.round(M.kcal)} de ${T.kcal}</span></div><div class="kbig2"><b>${Math.max(0,Math.round(T.P-M.P))} g</b><span>de proteína faltam</span></div><div class="bar big"><i style="width:${Math.min(100,M.kcal/T.kcal*100)}%;background:${fK<0?'var(--orange)':'var(--ink)'}"></i></div>
    ${barra('Proteína',M.P,T.P,' g')}${barra('Carboidrato',M.C,T.C,' g')}${barra('Gordura',M.G||0,T.G,' g')}${barra('Fibra',M.F,30,' g')}${limiteBar('Açúcar extra',M.A,25)}
    ${(()=>{const h=hAgora();return M.A>25?'<p class="small" style="margin:0;color:var(--orange)">Açúcar adicionado passou do limite hoje. Evite doce, suco e refrigerante no resto do dia.</p>':h>=15&&M.F<30*fracRef(h)*0.7?'<p class="small" style="margin:0;color:var(--orange)">Pouca fibra até agora: não deixe faltar feijão, salada e legumes.</p>':''})()}</div>`}
@@ -1074,7 +1082,7 @@ const FOODS=[
 ["Batata doce","g",0,77,0.6,18.4,0.1],["Batata","g",0,52,1.2,11.9,0],["Cuscuz","g",0,113,2.2,25.3,0.7],["Tapioca","un",60,240,0,59,0,"un"],["Pão francês","un",50,300,8,58.6,3.1,"un"],
 ["Pão integral","un",25,253,9.4,49.9,3.7,"fatia"],["Mussarela","un",20,330,22.6,3,25.2,"fatia"],["Queijo branco","un",30,264,17.4,3.2,20.2,"fatia"],["Presunto","un",15,94,14.3,2.1,2.7,"fatia"],
 ["Leite desnatado","ml",0,35,3.4,4.9,0.1],["Leite integral","ml",0,61,3.2,4.7,3.3],["Manteiga","g",0,726,0.4,0.1,82.4,"",10],["Café com leite","ml",0,30,1.6,2.4,1.6],["Café preto","ml",0,2,0.1,0,0],
-["Iogurte natural","un",170,61,3.5,4.7,3.3,"pote"],["Whey","un",30,390,83.3,6.7,3.3,"scoop"],["Aveia","g",0,394,13.9,66.6,8.5,"colher",15],["Pasta de amendoim","un",15,620,26,18,50,"colher"],
+["Iogurte natural","un",170,61,3.5,4.7,3.3,"pote"],["Sardinha em lata","un",84,208,24.6,0,11.5,"lata"],["Whey","un",30,390,83.3,6.7,3.3,"scoop"],["Aveia","g",0,394,13.9,66.6,8.5,"colher",15],["Pasta de amendoim","un",15,620,26,18,50,"colher"],
 ["Amendoim","g",0,567,26,16,49],["Salada","un",100,15,1.3,2.5,0.2,"prato"],["Legumes","g",0,35,1.5,7,0.3],["Azeite","un",13,884,0,0,100,"colher"],
 ["Pão de queijo","un",25,363,5.1,34,24,"un"],["Coxinha","un",100,290,9,29,15,"un"],["Salgado assado","un",80,300,8,38,13,"un"],["Pizza","un",110,260,11,30,10,"fatia"],
 ["Hambúrguer","un",200,255,13,25,11,"un"],["Batata frita","g",0,312,3.4,41,15],["Refrigerante","ml",0,42,0,10.6,0],["Suco de laranja","ml",0,45,0.7,10.4,0.2],["Cerveja","ml",0,43,0.5,3.6,0],
@@ -1113,12 +1121,12 @@ function renderComida(){
   const porRef=[...SLOTS,EXTRA].map(sl=>{const it=hj.filter(x=>(x.ref||slotDe(hCom(x)))===sl[0]);if(!it.length)return null;return {sl,it,h:Math.min(...it.map(hCom)),k:Math.round(it.reduce((a,x)=>a+(+x.kcal||0),0))}}).filter(Boolean).sort((a,b)=>b.h-a.h)
     .map(g=>`<div class="tl${ua0&&Date.now()-ua0.at<4000&&g.it.some(x=>ua0.ids.includes(x.ts))?' novo':''}"><div class="tlh"><span class="tlt">${fmtH(g.h)}</span><span class="tln">${g.sl[1]}</span><span class="tlk">${g.k} kcal</span></div>${g.it.map(x=>`<div class="tli"><span>${esc(x.nome)}</span><small>${esc(qf(x))}</small><b>${Math.round(x.kcal)}</b>${EDIT?`<button class="xdel" data-del2="${x._id||x.ts}" aria-label="Apagar ${esc(x.nome)}">✕</button>`:''}</div>`).join('')}</div>`).join('');
   const ua=ls.get('ultimoAdd',null),undo=ua&&Date.now()-ua.at<120000&&hj.some(x=>ua.ids.includes(x.ts));
-  return `${renderFlex(true)}
+  return `${renderModosD()}${renderFlex(true)}
   <div class="card stack"><div class="ex-top"><h3>Comi hoje</h3><span class="ctot">${tot} kcal</span></div>${renderVoz()}${porRef?`<div class="tlw${EDIT?' edit':''}">${porRef}</div>${EDIT?'<p class="small muted" style="margin:0">Toque no ✕ e confirme em "Apagar".</p>':''}<button class="undo" data-edit="1">${EDIT?'Pronto':'Corrigir um registro'}</button>`:'<p class="small muted">Nada ainda.</p>'}${undo?`<button class="undo" data-undo="1">Desfazer o último registro</button>`:''}</div>
     ${renderMacros(true)}${renderGuardiao()}
   <div class="card stack"><h3>Comi outra coisa</h3>
     <form id="fCom" class="add2"><input id="cNome" placeholder="O que você comeu?" autocomplete="off" autocapitalize="sentences"><div class="sugs" id="cSugs"></div>
-     <div class="row3"><input id="cQtd" inputmode="decimal" placeholder="Qtd" value="1"><select id="cUn" class="sel"><option value="un">unidade</option><option value="g">gramas</option><option value="ml">ml</option></select><select id="cRef" class="sel">${SLOTS.map(s=>`<option value="${s[0]}"${s[0]===slot?' selected':''}>${s[1]}</option>`).join('')}</select></div>
+     <div class="row3"><input id="cQtd" inputmode="decimal" placeholder="Qtd" value="1"><select id="cUn" class="sel"><option value="un">unidade</option><option value="g">gramas</option><option value="ml">ml</option></select><select id="cRef" class="sel">${SLOTS.map(s=>`<option value="${s[0]}"${s[0]===slot?' selected':''}>${(dietaC()&&(dietaC().find(m=>m[3]===s[0])||[])[1])||s[1]}</option>`).join('')}</select></div>
      <label class="horaL"><span>Horário</span><input id="cHora" type="time" value="${(()=>{const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')})()}"></label>
      <button class="btn" style="margin:0">Adicionar</button></form>
     <details class="tip" style="margin:0"><summary>Não está na lista? Informe as kcal</summary><p style="display:flex;gap:8px;align-items:center"><input id="cKcal" inputmode="numeric" placeholder="kcal" class="mini-in"><input id="cProt" inputmode="decimal" placeholder="proteína g" class="mini-in"></p></details>
@@ -1146,7 +1154,14 @@ const NAME_RULES=[[/rotacao externa/,[],'External_Rotation_with_Cable'],[/flexor
  [/abdominal|prancha|elevacao de pernas|infra|crunch|dead bug|core/,['Core'],'Cable_Crunch'],[/lombar|superman|hiperextensao/,['Lombar','Glúteo'],'Superman'],[/esteira|caminhada|bike|bicicleta|eliptico|corrida/,['Quadríceps','Panturrilha'],'Walking_Treadmill']];
 function infoNome(n){const t=nrm(n);if(/voador|peck/.test(t)&&!/invers|invert/.test(t))return [['Peito'],'Butterfly'];for(const [re,m,im] of NAME_RULES)if(m&&re.test(t))return [m,im];return [[],null]}
 function treinoC(){return ls.get('treinoCustom',null)}
-function dietaC(){const d=ls.get('dietaCustom',null);return d&&d.length?d:null}
+function perfAtual(){try{return perfis()[PERF]||{}}catch(e){return {}}}
+function soDieta(){return !!perfAtual().soDieta}
+function modoD(){const P=perfAtual();if(!P.dietas)return null;const m=ls.get('modoDieta',P.modoPadrao);return P.dietas[m]?m:Object.keys(P.dietas)[0]}
+function dietaC(){const d=ls.get('dietaCustom',null);if(d&&d.length)return d;const P=perfAtual(),m=modoD();if(m)return P.dietas[m].ref;const pd=P.dieta;return pd&&pd.length?pd:null}
+function renderModosD(){const P=perfAtual(),m=modoD();if(!m)return '';return `<div class="card stack" style="gap:8px"><div class="ex-top"><h3>Modo da dieta</h3><span class="small muted">${P.dietas[m].meta.kcal} kcal/dia</span></div>
+ <div class="seg" style="grid-template-columns:repeat(${Object.keys(P.dietas).length},1fr)">${Object.entries(P.dietas).map(([k,d])=>`<button class="dseg" data-modod="${k}" aria-pressed="${k===m}">${esc(d.nome)}<small style="display:block;font-weight:500;font-size:.68rem;opacity:.8">${esc(d.sub||'')}</small></button>`).join('')}</div>
+ ${ls.get('dietaCustom',null)?'<p class="small muted" style="margin:0">Você editou o cardápio em Meu plano. Ao trocar o modo, o cardápio volta ao do modo escolhido.</p>':''}</div>`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-modod]');if(!b)return;ls.set('modoDieta',b.dataset.modod);ls.set('dietaCustom',null);_memo={};render();toast('Dieta '+perfAtual().dietas[b.dataset.modod].nome)});
 function aplicarPlano(){const c=treinoC();DIAS.splice(0,DIAS.length,...JSON.parse(JSON.stringify(c&&c.dias&&c.dias.length?c.dias:DIAS0)));CUST_M={};CUST_IMG={};
   DIAS.forEach(d=>d.ex.forEach(e=>{if(e.m)CUST_M[e.id]=e.m;if(e.img)CUST_IMG[e.id]=e.img}));_memo={}}
 function slugId(n){return nrm(n).replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'').slice(0,28)||'ex'}
@@ -1211,7 +1226,7 @@ function garantirC(){const c=treinoC();return c?JSON.parse(JSON.stringify(c)):{d
 function baixarTxt(nome,txt){try{if(dl){dl.save({filename:nome,data:txt});return}}catch(e){}
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));a.download=nome;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
 function resumoPrev(p){const r=[];if(p.treino){const n=p.treino.dias.reduce((a,d)=>a+d.ex.length,0);r.push(`<b>Treino:</b> ${p.treino.dias.length} ${p.treino.dias.length>1?'dias':'dia'}, ${n} exercícios`)}if(p.dieta)r.push(`<b>Alimentação:</b> ${p.dieta.length} refeições`);return r.join('<br>')}
-function renderMeuPlano(){const ab=MP.aba,tc=!!treinoC(),dc=!!dietaC();let corpo='';
+function renderMeuPlano(){if(soDieta())MP.aba='dieta';const ab=MP.aba,tc=!!treinoC(),dc=!!(ls.get('dietaCustom',null)||[]).length;let corpo='';
   if(MP.prev){const p=MP.prev;corpo=`<div class="vozBox"><p style="margin:0">Encontrei no arquivo:</p><p style="margin:0">${resumoPrev(p)||'Nada reconhecido.'}</p>
    ${p.treino?p.treino.dias.map(d=>`<details class="mpd"><summary><b>${esc(d.nome)}</b> · ${esc(d.foco)} <span class="muted">${d.ex.length} ex.</span></summary>${d.ex.map(e=>`<div class="mpi"><span>${e.ss?'<i class="mpss">'+e.ss.toUpperCase()+'</i>':''}${esc(e.n)}</span><span class="muted">${serieTxt(e)}${e.d?' · '+e.d+'s':''}</span></div>`).join('')}</details>`).join(''):''}
    ${p.dieta?`<details class="mpd"><summary><b>Alimentação</b> <span class="muted">${p.dieta.length} refeições</span></summary>${p.dieta.map(m=>`<div class="mpi col"><span><b>${esc(m[0])}</b> ${esc(m[1])}</span><span class="muted">${esc(m[2])}</span></div>`).join('')}</details>`:''}
@@ -1227,7 +1242,7 @@ function renderMeuPlano(){const ab=MP.aba,tc=!!treinoC(),dc=!!dietaC();let corpo
     (MP.add==='dieta'?`<form class="mpadd" data-mpaddf="dieta"><input id="mpAddIn" placeholder="Ex.: 21h Ceia: 200 ml de leite" autocomplete="off"><button class="btn" style="margin:0;width:auto">OK</button></form>`:`<button type="button" class="undo" data-mpadd="dieta">+ adicionar refeição</button>`)}
   const cust=ab==='treino'?tc:dc;
   return `<div class="card stack" id="meuPlano"><div class="ex-top"><h3>Meu plano</h3>${cust?'<span class="small" style="color:var(--orange);font-weight:700">personalizado</span>':''}</div>
-   <div class="seg" style="grid-template-columns:1fr 1fr"><button class="dseg" data-mpaba="treino" aria-pressed="${ab==='treino'}">Treino</button><button class="dseg" data-mpaba="dieta" aria-pressed="${ab==='dieta'}">Alimentação</button></div>
+   ${soDieta()?'':`<div class="seg" style="grid-template-columns:1fr 1fr"><button class="dseg" data-mpaba="treino" aria-pressed="${ab==='treino'}">Treino</button><button class="dseg" data-mpaba="dieta" aria-pressed="${ab==='dieta'}">Alimentação</button></div>`}
    ${corpo}
    ${MP.prev||MP.edit?'':`<div class="mpbtns"><button class="btn sec" data-mpexp="1" type="button">Exportar</button><label class="btn sec">Importar<input id="mpImp" type="file" accept=".txt,.md,.csv,text/plain,text/markdown" hidden></label><button class="btn sec" data-mpedit="1" type="button">Editar</button><button class="btn sec" data-mpcopy="1" type="button">Copiar</button></div>
    ${cust?`<button class="undo" data-mpreset="${ab}" type="button">Voltar ao ${ab==='treino'?'treino':'cardápio'} original</button>`:''}`}</div>`}
@@ -1481,7 +1496,7 @@ async function delSupl(id){const p=supl.find(x=>String(x._id||x.ts)===String(id)
 
 /* ---------------- Router ---------------- */
 const VIEWS=['treino','casa','comida','dieta','progresso'];
-function route(){let h=(location.hash||'').slice(1);if(h==='dieta')h='comida';return VIEWS.includes(h)?h:'treino'}
+function route(){let h=(location.hash||'').slice(1);if(h==='dieta')h='comida';h=VIEWS.includes(h)?h:'treino';if(soDieta()&&(h==='treino'||h==='casa'))h='comida';return h}
 function diaPct(){const parts=[],w=new Date().getDay(),util=w>0&&w<6;
   const serie=(id,list)=>{const d=list.find(x=>x.id===id);if(!d)return null;const tot=d.ex.filter(e=>!e.aq).reduce((a,e)=>a+e.s,0);if(!tot)return null;if(feitoHoje(id))return 1;const dr=ls.get(draftKey(id),{});let ok=0;d.ex.forEach(e=>{if(!e.aq)ok+=Math.min(e.s,(dr[e.id]||[]).filter(x=>x&&x.ok).length)});return ok/tot};
   if(util){const g=Math.max(serie(diaHoje(),DIAS)||0,serie('alt_'+diaHoje(),ALT)||0);parts.push(g)}
@@ -1490,7 +1505,7 @@ function diaPct(){const parts=[],w=new Date().getDay(),util=w>0&&w<6;
 function updDayBar(){const f=$('#dayFill'),t=$('#dayPct');if(!f)return;let p=0;try{p=perfilPronto()?diaPct():0}catch(e){}f.style.width=p+'%';f.classList.toggle('full',p>=100);if(t)t.textContent='Dia '+p+'%'}
 function render(){
   _memo={};const v=route();if(!perfilPronto()||editPerf){const el=$('#view');el.innerHTML=renderSetup();document.querySelectorAll('nav.tabs a').forEach(a=>a.setAttribute('aria-current','false'));return}setTimeout(fixAlmoco,0);
-  document.querySelectorAll('nav.tabs a').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')==='#'+v?'page':'false'));
+  const sd=soDieta(),nv=document.querySelector('nav.tabs');if(nv)nv.classList.toggle('so2',sd);document.querySelectorAll('nav.tabs a').forEach(a=>{const hr=a.getAttribute('href');a.hidden=sd&&(hr==='#treino'||hr==='#casa');a.setAttribute('aria-current',hr==='#'+v?'page':'false')});
   const el=$('#view');
   if(v==='treino') el.innerHTML=sel.alt?renderWorkout('alt_'+sel.treino,ALT):renderWorkout(sel.treino,DIAS);
   else if(v==='casa') el.innerHTML=renderWorkout(sel.casa,CASA)+'<div class="dayhead" style="margin-top:22px"><div><div class="lbl">Noite</div><h2>Esteira · opcional</h2></div></div>'+renderEsteira();
