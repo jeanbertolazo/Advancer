@@ -464,7 +464,7 @@ const ALT=[
   {id:'a_pant_s',n:'Panturrilha no degrau',q:'panturrilha unilateral no degrau em casa',s:3,r:[12,20],d:30,bw:1,uni:1},
   {id:'a_prancha_l',n:'Prancha lateral',q:'prancha lateral execução correta',s:2,r:[20,40],d:20,bw:1,t:1,o:'Cada lado.'}]},
 ];
-const PERFIL_PADRAO={jean:{nome:'Jean',sexo:'m',idade:33,altura:173,peso:80,gord:26,bmr:1573,data:'2026-11-02'},max:{nome:'Max'},patrick:{nome:'Patrick'},carol:{nome:'Carol',sexo:'f',idade:32,altura:157,peso:60,data:'2026-11-14',soDieta:1,variar:1,modoPadrao:'equilibrada',examesIni:{data:'2026-10-26',tgp:58.6,tgo:62.1,ggt:134,ct:193,ldl:123.7,hdl:52},
+const PERFIL_PADRAO={jean:{nome:'Jean',sexo:'m',idade:33,altura:173,peso:80,gord:26,bmr:1573,data:'2026-11-02'},max:{nome:'Max'},patrick:{nome:'Patrick'},ronaldo:{nome:'Ronaldo',copiaDe:'jean'},carol:{nome:'Carol',sexo:'f',idade:32,altura:157,peso:60,data:'2026-11-14',soDieta:1,variar:1,modoPadrao:'equilibrada',examesIni:{data:'2026-10-26',tgp:58.6,tgo:62.1,ggt:134,ct:193,ldl:123.7,hdl:52},
   agua:[[5.67,250],[7,200],[8.83,250],[10,250],[11.5,200],[13,300],[14.5,250],[16,250],[17.5,200],[19,150]],
   dietas:{
    leve:{nome:'Leve',sub:'perder mais rápido',meta:{kcal:1450,P:95,G:45},ref:[['5h40','Café da manhã','2 ovos mexidos + 1 pão francês + 200 ml de leite desnatado + café','cafe'],['8h50','Lanche','1 iogurte natural + 1 maçã','pos'],
@@ -1953,7 +1953,13 @@ let DB=null,UID=null,unsubs=[],editPerf=false;
 function perfis(){const p=ls.get('perfis',null)||{};Object.keys(PERFIL_PADRAO).forEach(k=>{if(!p[k])p[k]=JSON.parse(JSON.stringify(PERFIL_PADRAO[k]))});return p}
 function salvarPerfis(p){ls.set('perfis',p);if(DB&&UID){try{DB.doc('data/users/'+UID+'/config').set({perfis:p})}catch(e){}}}
 function perfilPronto(){const P=perfis()[PERF];return !!(P&&+P.peso&&+P.altura)}
-function aplicarPerfil(){aplicarPlano();const P=perfis()[PERF]||{},sx=P.sexo||'m',peso=+P.peso||80,alt=+P.altura||173,id=+P.idade||30,c=+P.cintura;
+
+function copiarPerfilDe(orig,dest){try{if(localStorage.getItem('copiado@'+dest))return false;const n=[];for(let i=0;i<localStorage.length;i++)n.push(localStorage.key(i));
+  n.forEach(K=>{let k=null;if(orig==='jean'){if(!K.includes('@'))k=K}else if(K.endsWith('@'+orig))k=K.slice(0,-(orig.length+1));if(!k||LS_GLOBAL.has(k)||/^(sync|copiado|snapImport$|bkAdiado$|ultimoBackup$)/.test(k))return;
+    const D=k+'@'+dest;if(localStorage.getItem(D)==null)localStorage.setItem(D,localStorage.getItem(K))});
+  const pf=JSON.parse(localStorage.getItem('perfis')||'{}'),po=pf[orig]||{};pf[dest]={...po,...(pf[dest]||{}),nome:(PERFIL_PADRAO[dest]||{}).nome||dest,copiaDe:orig};localStorage.setItem('perfis',JSON.stringify(pf));
+  localStorage.setItem('copiado@'+dest,JSON.stringify(Date.now()));return true}catch(e){return false}}
+function aplicarPerfil(){{const _pp=(PERFIL_PADRAO[PERF]||{});if(_pp.copiaDe&&copiarPerfilDe(_pp.copiaDe,PERF)){}};aplicarPlano();const P=perfis()[PERF]||{},sx=P.sexo||'m',peso=+P.peso||80,alt=+P.altura||173,id=+P.idade||30,c=+P.cintura;
   let gd=P.gord!=null&&P.gord!==''?+P.gord:null;if(gd==null)gd=c?Math.round(((sx==='f'?76:64)-20*alt/c)*10)/10:(sx==='f'?30:22);
   BASE={data:P.data||hoje(),peso,gord:gd,altura:alt,sexo:sx,idade:id};
   BMR=+P.bmr||Math.round(370+21.6*peso*(1-gd/100));TDEE0=PERF==='jean'&&+P.bmr===1573?2300:Math.round(BMR*1.46/50)*50;PF=peso/80;
