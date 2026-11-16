@@ -283,6 +283,7 @@ input:disabled{opacity:1;-webkit-text-fill-color:var(--ink)}button:disabled{curs
 .ins{display:grid;gap:8px}.in{padding:10px 12px;border-radius:12px;background:var(--sunk);border-left:4px solid var(--green)}.in.att{border-left-color:var(--orange)}.in.na{border-left-color:var(--line2)}.in.att,.in.att p{color:var(--ink)}.in.att b{color:var(--orange)}.rel .ri.att{color:#111}.in b{font-size:.9rem}.in p{margin:2px 0 0;font-size:.85rem}.in .ac{color:var(--ink2);font-weight:600}.in.na .ac{color:var(--muted);font-weight:500}
 body.relon>*:not(#relBox){display:none!important}#relBox{background:#fff;color:#111;min-height:100vh}.rel{max-width:800px;margin:0 auto;padding:16px max(16px,env(safe-area-inset-left,0px)) 40px;font:14px/1.45 system-ui,sans-serif;color:#111}.rel h1{margin:0;font-size:1.5rem;color:#EA6A12}.rel h2{margin:22px 0 8px;font-size:1.05rem;border-bottom:2px solid #EA6A12;padding-bottom:4px}.rel h3{margin:12px 0 4px;font-size:.92rem}.rel table{width:100%;border-collapse:collapse;font-size:.8rem}.rel th,.rel td{border-bottom:1px solid #ddd;padding:5px 4px;text-align:left}.rel th{background:#f4f4f4}.rel .cov{font-size:.8rem;color:#555}.rel .kp{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.rel .kp div{border:1px solid #ddd;border-radius:8px;padding:6px 8px}.rel .kp span{display:block;font-size:.7rem;color:#666}.rel .kp b{font-size:1rem}.rel .ri{padding:6px 8px;margin:4px 0;border-left:4px solid #16a34a;background:#f8f8f8;font-size:.85rem}.rel .ri.att{border-left-color:#EA6A12}.rel .ri.na{border-left-color:#aaa}.rel .foot{margin-top:24px;font-size:.75rem;color:#666}.relbar{position:sticky;top:0;display:flex;gap:8px;justify-content:space-between;padding:10px 0;background:#fff}.relbar button{border:1px solid #ccc;background:#fff;padding:9px 12px;border-radius:8px;font:700 .85rem system-ui}.relbar button:last-child{background:#EA6A12;color:#fff;border-color:#EA6A12}
 @media print{.noprint{display:none!important}.rel{padding:0}@page{size:A4;margin:14mm}}
+.sycode{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;background:var(--sunk)}.sycode span{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase}.sycode b{flex:1;font:700 .95rem ui-monospace,Menlo,monospace;letter-spacing:.04em;word-break:break-all}.sycode button{border:none;background:var(--orange);color:#fff;font:700 .8rem var(--font);padding:7px 10px;border-radius:8px}
 .evt{font-style:normal;font-size:.65rem;font-weight:800;color:#fff;background:var(--orange);border-radius:5px;padding:1px 5px;margin-left:4px;text-transform:uppercase}
 .undo{font:600 .78rem var(--font);color:var(--muted);background:none;border:none;text-decoration:underline;padding:4px 0;cursor:pointer;justify-self:start}
 .tlp{padding:5px 0;font-size:.88rem;border-top:1px dashed var(--line)}
@@ -928,8 +929,8 @@ const medCard=`<div class="card stack"><div class="ex-top"><h3>Medidas</h3>${soD
    <span class="lbl" style="margin-top:4px">Últimos treinos</span><div class="hist">${sesL}</div></div>`;
   const byWeek={};medidas.forEach(m=>{const w=weekOf(m.data);byWeek[w]=m});let rows='';
   for(let n=1;n<=12;n++){const m=proj(n,.3,.12),me=byWeek[n],bf=me&&navy(me.cintura);rows+=`<tr class="${n===8?'mile':''}${n===semanaAtual()?' now':''}"><td>${n}${n===8?' · InBody':''}</td><td>${m.bf.toFixed(1).replace('.',',')}%</td><td class="meas">${me&&me.peso?String(me.peso).replace('.',','):'–'}</td><td class="meas">${bf?bf.toFixed(1).replace('.',',')+'%':'–'}</td></tr>`}
-  if(soDieta())return renderExames()+renderInteligencia()+medCard+resumoSemanaSaude()+renderCompras()+renderMeuPlano()+renderBackup();
-  return '<button class="undo ajp" data-perfedit="1">Ajustar meu plano (dados, dieta e treino)</button>'+renderCheckin()+renderInteligencia()+resumo+renderMeuPlano()+renderBackup()+renderCal()+medCard+renderCorpo()+(soDieta()?'':semCard+renderCarga())+renderAnalise(true)+
+  if(soDieta())return renderExames()+renderInteligencia()+medCard+resumoSemanaSaude()+renderCompras()+renderMeuPlano()+renderSync()+renderBackup();
+  return '<button class="undo ajp" data-perfedit="1">Ajustar meu plano (dados, dieta e treino)</button>'+renderCheckin()+renderInteligencia()+resumo+renderMeuPlano()+renderSync()+renderBackup()+renderCal()+medCard+renderCorpo()+(soDieta()?'':semCard+renderCarga())+renderAnalise(true)+
   `<div class="card stack"><h3>Projeção de gordura · 12 semanas</h3><div class="chart">${renderChart()}</div><div class="legend"><span><i style="background:var(--orange)"></i>Previsto</span><span><i style="background:var(--ink)"></i>Você</span></div></div>
   <div class="tbl"><table style="min-width:0"><thead><tr><th>Sem.</th><th>Previsto</th><th>Seu peso</th><th>Seu %</th></tr></thead><tbody>${rows}</tbody></table></div>
   <details class="tip"><summary>Como ler</summary><p>Gasto = metabolismo (${BMR.toLocaleString('pt-BR')} kcal × 1,2) + treinos; saldo = comido − gasto; 7.700 kcal = 1 kg de gordura; músculo ≈ 20 g por treino de força. A esteira é bônus: a projeção não depende dela. O % pela cintura (fórmula RFM) tem margem de ±3%. Recuperação considera quantas séries cada músculo fez nas últimas 72 h; exercícios de casa contam menos.</p></details>`}
@@ -1519,6 +1520,74 @@ document.addEventListener('click',e=>{const t=e.target;let b;
   if(t.closest('[data-relfechar]')){const el=$('#relBox');if(el)el.remove();document.body.classList.remove('relon');return}
   if(t.closest('[data-relimp]')){try{window.print()}catch(err){toast('Use o menu do navegador › Compartilhar › Imprimir')}return}});
 
+/* ===== Sincronização na nuvem (Supabase, por código) ===== */
+const SB_URL='https://wmcgbqnldrrauhzbxcpz.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndtY2dicW5sZHJyYXVoemJ4Y3B6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4Mjg4ODAsImV4cCI6MjExMDQwNDg4MH0.QKUX4vsNZ_v00ZjsHyCs3k6NM0C473pH3toyWGjxZaI';
+const SYNC_LOCAL=/^(draft_|dor_|fold|snapImport$|bkAdiado$|ultimoBackup$|sync|perfilAtual$)/;
+const SYNC_COLS=['sessoes','medidas','comida','suplementos'];
+let SYNC={busy:false,t:null,last:null,err:null};
+function sgRaw(K){try{const v=localStorage.getItem(K);return v==null?undefined:JSON.parse(v)}catch(e){return undefined}}
+function ssRaw(K,v){try{if(v===undefined)localStorage.removeItem(K);else localStorage.setItem(K,JSON.stringify(v))}catch(e){}}
+function kP(p,k){return p==='jean'||LS_GLOBAL.has(k)?k:k+'@'+p}
+function syncCode(){return sgRaw('syncCode')||null}
+function perfisIds(){const s=new Set(['jean',...Object.keys(sgRaw('perfis')||{}),...Object.keys(PERFIL_PADRAO||{})]);try{for(let i=0;i<localStorage.length;i++){const m=localStorage.key(i).match(/@([a-z0-9_-]+)$/i);if(m)s.add(m[1])}}catch(e){}return [...s]}
+function snapLocal(){const out={};perfisIds().forEach(p=>{
+  SYNC_COLS.forEach(c=>(sgRaw(kP(p,'loc_'+c))||[]).forEach(x=>{if(x&&x.ts!=null){const {_id,...y}=x;out[p+'\u0001'+c+':'+x.ts]=y}}));
+  const d=sgRaw(kP(p,'loc_diario'))||{};Object.keys(d).forEach(dt=>out[p+'\u0001diario:'+dt]=d[dt]);
+  try{for(let i=0;i<localStorage.length;i++){const K=localStorage.key(i);let k=null;if(p==='jean'){if(!K.includes('@'))k=K}else if(K.endsWith('@'+p))k=K.slice(0,-(p.length+1));
+    if(!k||LS_GLOBAL.has(k)||/^loc_/.test(k)||SYNC_LOCAL.test(k))continue;const v=sgRaw(K);if(v!==undefined)out[p+'\u0001cfg:'+k]=v}}catch(e){}});
+  const pf=sgRaw('perfis');if(pf)out['_\u0001perfis']=pf;return out}
+function aplicarRemoto(p,k,v,del){if(p==='_'){if(k==='perfis'&&!del)ssRaw('perfis',v);return}
+  const i=k.indexOf(':'),tp=k.slice(0,i),id=k.slice(i+1);
+  if(SYNC_COLS.includes(tp)){const K=kP(p,'loc_'+tp),a=(sgRaw(K)||[]).filter(x=>String(x.ts)!==id);if(!del)a.push(v);a.sort((x,y)=>x.ts-y.ts);ssRaw(K,a)}
+  else if(tp==='diario'){const K=kP(p,'loc_diario'),o=sgRaw(K)||{};if(del)delete o[id];else o[id]=v;ssRaw(K,o)}
+  else if(tp==='cfg'){if(SYNC_LOCAL.test(id))return;ssRaw(kP(p,id),del?undefined:v)}}
+const hsh=v=>hashStr(JSON.stringify(ordObj(v)));
+async function rpc(fn,body){const r=await fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});if(!r.ok)throw new Error('HTTP '+r.status+' '+(await r.text()).slice(0,120));return r.json()}
+async function sincronizar(manual){const code=syncCode();if(!code||SYNC.busy)return;if(!navigator.onLine){SYNC.err='sem internet';return}
+  SYNC.busy=true;let mudou=false;try{
+  const st=sgRaw('syncState')||{h:{},srv:0,init:false},loc=snapLocal(),K=x=>x.replace('\u0001','|');
+  // 1) puxar
+  let since=Math.max(0,(st.srv||0)-60000),fim=false,maxSrv=st.srv||0;const remK=new Set();
+  while(!fim){const rows=await rpc('sync_pull',{p_code:code,p_since:since});rows.forEach(r=>{const key=r.perfil+'\u0001'+r.k,kk=K(key);remK.add(key);maxSrv=Math.max(maxSrv,+r.srv_ts);
+      const L=loc[key],lh=L===undefined?null:hsh(L),rh=r.deleted?null:hsh(r.v);if(lh===rh){st.h[kk]=rh;return}
+      const modLocal=st.init?(lh!==(st.h[kk]??null)):false;
+      if(!st.init&&L!==undefined&&!/^(cfg|diario)/.test(r.k)&&r.perfil!=='_'){return}
+      if(modLocal)return;aplicarRemoto(r.perfil,r.k,r.v,r.deleted);st.h[kk]=rh;if(rh==null)delete loc[key];else loc[key]=r.v;mudou=true});
+    if(rows.length<2000)fim=true;else since=Math.max(...rows.map(r=>+r.srv_ts))}
+  // 2) enviar
+  const now=Date.now(),up=[];Object.entries(loc).forEach(([key,v])=>{const kk=K(key),h=hsh(v);if(st.h[kk]!==h){const [p,k]=key.split('\u0001');up.push({perfil:p,k,v,deleted:false,updated_at:now});st.h[kk]=h}});
+  if(st.init)Object.keys(st.h).forEach(kk=>{const key=kk.replace('|','\u0001');if(!(key in loc)&&st.h[kk]!=null){const [p,k]=key.split('\u0001');up.push({perfil:p,k,v:null,deleted:true,updated_at:now});st.h[kk]=null}});
+  for(let i=0;i<up.length;i+=500){const s=await rpc('sync_push',{p_code:code,p_rows:up.slice(i,i+500)});maxSrv=Math.max(maxSrv,+s||0)}
+  st.srv=maxSrv;st.init=true;ssRaw('syncState',st);SYNC.last=Date.now();SYNC.err=null;
+  if(mudou){_memo={};aplicarPlano();loadLocal();render()}else if(manual)render();if(manual)toast(mudou?'Sincronizado: dados atualizados':'Sincronizado')}
+  catch(e){SYNC.err=String(e.message||e).slice(0,80);if(manual){toast('Não consegui sincronizar agora');render()}}finally{SYNC.busy=false}}
+function syncSoon(){if(!syncCode())return;clearTimeout(SYNC.t);SYNC.t=setTimeout(()=>sincronizar(false),2500)}
+{const _set=ls.set;ls.set=(k,v)=>{_set(k,v);if(!SYNC_LOCAL.test(k))syncSoon()}}
+function novoCodigo(){const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',b=new Uint32Array(20);crypto.getRandomValues(b);let s='';b.forEach((x,i)=>{s+=a[x%a.length];if(i%5===4&&i<19)s+='-'});return s}
+setInterval(()=>{if(!document.hidden)sincronizar(false)},45000);
+document.addEventListener('visibilitychange',()=>{if(syncCode())sincronizar(false)});
+addEventListener('online',()=>sincronizar(false));
+function renderSync(){const c=syncCode();
+  if(!c)return `<div class="card stack" id="syncCard"><div class="ex-top"><h3>Sincronizar aparelhos</h3><span class="small muted">desligado</span></div>
+   <p class="small muted" style="margin:0">Deixa o celular e o PC sempre com os mesmos dados. Cada aparelho continua funcionando sem internet.</p>
+   <button class="btn" data-synnovo="1" type="button" style="margin:0">Ativar neste aparelho (gerar código)</button>
+   <form id="fSync" class="mpadd" style="margin:0"><input id="syncIn" placeholder="Já tenho um código: XXXXX-XXXXX-XXXXX-XXXXX" autocomplete="off" autocapitalize="characters"><button class="btn" style="margin:0;width:auto">Entrar</button></form></div>`;
+  const quando=SYNC.last?Math.max(0,Math.round((Date.now()-SYNC.last)/1000)):null;
+  return `<div class="card stack" id="syncCard"><div class="ex-top"><h3>Sincronizar aparelhos</h3><span class="pill ${SYNC.err?'att':'up-g'}">${SYNC.err?'erro':'ligado'}</span></div>
+   <p class="small" style="margin:0">${SYNC.err?'Não sincronizou: '+esc(SYNC.err)+'. Tenta de novo sozinho.':quando==null?'Sincronizando…':'Última sincronização: '+(quando<60?'agora':Math.round(quando/60)+' min atrás')}</p>
+   <div class="sycode"><span>Código</span><b id="syCode">${esc(c)}</b><button type="button" data-sycopy="1">Copiar</button></div>
+   <p class="small muted" style="margin:0">No outro aparelho, abra o Advancer → Progresso → Sincronizar aparelhos → cole este código. <b>Não compartilhe</b>: quem tiver o código vê os dados.</p>
+   <div class="mpbtns"><button class="btn sec" data-synagora="1" type="button">Sincronizar agora</button><button class="btn sec" data-synsair="1" type="button">Desligar aqui</button></div></div>`}
+document.addEventListener('click',async e=>{const t=e.target;let b;
+  if(t.closest('[data-synnovo]')){ssRaw('syncCode',novoCodigo());ssRaw('syncState',{h:{},srv:0,init:true});render();await sincronizar(true);return}
+  if(t.closest('[data-synagora]')){sincronizar(true);return}
+  if(t.closest('[data-sycopy]')){try{await navigator.clipboard.writeText(syncCode());toast('Código copiado')}catch(err){const r=document.createRange();r.selectNodeContents($('#syCode'));const s=getSelection();s.removeAllRanges();s.addRange(r);toast('Selecionado: copie o código')}return}
+  if(b=t.closest('[data-synsair]')){if(b.dataset.confirm!=='1'){b.dataset.confirm='1';b.textContent='Toque de novo';setTimeout(()=>{if(b.isConnected){b.dataset.confirm='';b.textContent='Desligar aqui'}},3000);return}ssRaw('syncCode');ssRaw('syncState');render();toast('Sincronização desligada neste aparelho. Os dados continuam aqui.');return}});
+document.addEventListener('submit',async e=>{if(e.target.id!=='fSync')return;e.preventDefault();const v=(($('#syncIn')||{}).value||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if(v.length!==20){toast('Código inválido: são 20 letras e números');return}const c=v.match(/.{5}/g).join('-');
+  try{const r=await rpc('sync_pull',{p_code:c,p_since:0});if(!r.length){toast('Nenhum dado com esse código. Confira o código.');return}}catch(err){toast('Sem conexão com a nuvem agora');return}
+  ssRaw('syncCode',c);ssRaw('syncState',{h:{},srv:0,init:false});render();await sincronizar(true)});
+
 /* ===== Voz ===== */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let VOZ=null,REC=null;
 const NUMW={um:1,uma:1,dois:2,duas:2,tres:3,quatro:4,cinco:5,seis:6,sete:7,oito:8,nove:9,dez:10,onze:11,doze:12,meio:.5,meia:.5,vinte:20,trinta:30,quarenta:40,cinquenta:50,sessenta:60,setenta:70,oitenta:80,noventa:90,cem:100,cento:100,duzentos:200,duzentas:200,trezentos:300,trezentas:300,quatrocentos:400,quinhentos:500,mil:1000};
@@ -1929,7 +1998,7 @@ document.addEventListener('submit',async e=>{if(e.target.id==='fPerf'){e.prevent
 function loadLocal(){_memo={};diario=ls.get('loc_diario',{});supl=ls.get('loc_suplementos',[]);comidas=ls.get('loc_comida',[]);sessions=ls.get('loc_sessoes',[]);medidas=ls.get('loc_medidas',[]).sort((a,b)=>a.data<b.data?-1:1)}
 async function init(){
   try{const pa=JSON.parse(localStorage.getItem('perfilAtual')||'null');if(pa&&perfis()[pa])PERF=pa}catch(e){}
-  sel.treino=diaHoje();sel.casa=casaHoje();aplicarPerfil();loadLocal();render();
+  sel.treino=diaHoje();sel.casa=casaHoje();aplicarPerfil();loadLocal();render();setTimeout(()=>sincronizar(false),1200);
   let user=null;
   try{DB=window.claude&&await claude.use('db');user=window.claude&&await claude.use('user');UID=user&&await user.id()}catch(e){}
   try{dl=window.claude&&await claude.use('downloads')}catch(e){}
