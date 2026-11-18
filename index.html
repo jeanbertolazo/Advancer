@@ -287,6 +287,7 @@ body.relon>*:not(#relBox){display:none!important}#relBox{background:#fff;color:#
 .hrbtn{width:100%;padding:11px;border-radius:12px;border:1.5px dashed rgba(255,255,255,.35);background:transparent;color:#fff;font:700 .9rem var(--font);cursor:pointer;margin:6px 0}
 .hrlive{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:14px;background:#1b1b1b;color:#fff;margin:6px 0}.hrlive .hrh{color:#ef4444;font-size:1.2rem;animation:pl 1s infinite}.hrlive b{font-size:1.8rem;line-height:1}.hrlive small{color:#aaa}.hrlive em{margin-left:auto;font-style:normal;font:700 .75rem var(--font);padding:4px 9px;border-radius:999px;color:#fff;text-transform:uppercase}.hrlive button{border:none;background:transparent;color:#888;font-size:1rem;padding:4px}
 .rhr{margin-left:6px;font:700 .8rem var(--font);color:#ffb4b4}
+.dtsel{display:flex;align-items:center;gap:6px;margin:10px 0 8px;flex-wrap:wrap;color:#ccc;font:600 .85rem var(--font)}.dtsel span{margin-right:auto}.dtsel button{border:1.5px solid #444;background:transparent;color:#fff;font:700 .82rem var(--font);padding:7px 12px;border-radius:999px}.dtsel button[aria-pressed=true]{background:var(--orange);border-color:var(--orange)}.dtsel input{background:#1b1b1b;color:#fff;border:1.5px solid #444;border-radius:10px;padding:6px 8px;font:600 .82rem var(--font);color-scheme:dark}.dtsel.av{padding:8px;border-radius:12px;background:rgba(234,106,18,.12)}
 .evt{font-style:normal;font-size:.65rem;font-weight:800;color:#fff;background:var(--orange);border-radius:5px;padding:1px 5px;margin-left:4px;text-transform:uppercase}
 .undo{font:600 .78rem var(--font);color:var(--muted);background:none;border:none;text-decoration:underline;padding:4px 0;cursor:pointer;justify-self:start}
 .tlp{padding:5px 0;font-size:.88rem;border-top:1px dashed var(--line)}
@@ -621,7 +622,7 @@ function renderWorkout(dia,list){
     ${list!==CASA?renderSono():''}
     ${list===DIAS&&LEVES.includes(semanaAtual())?'<div class="card note small"><b>Semana leve:</b> 2 séries por exercício, mesma carga.</div>':''}
     ${mgCards(dia,MG,mgDone,mgN,d)}<div class="dtips">${aquecimento(d)}<details class="tip"><summary>${list===DIAS?'Como treinar':'Como fazer'}</summary><p>${intro}${list===DIAS&&proxLeve()&&!LEVES.includes(semanaAtual())?' Próxima semana leve: '+fmtD(proxLeve().ini)+' a '+fmtD(proxLeve().fim)+'.':''}</p></details>${list!==CASA?`<button class="alt-link${list===ALT?' on':''}" id="altTog">${list===ALT?'← Voltar ao treino da academia':'Sem academia hoje? Treinar em casa'}</button>`:''}</div>
-    <div class="exlist" data-dia="${dia}" data-mgsel="${(sel.mg&&sel.mg[dia])||''}">${ex}</div>${trava?'':`<button class="btn" id="finish" data-dia="${dia}">${fe?'Salvar alterações':'Finalizar e salvar'}</button>`}</div>`;
+    <div class="exlist" data-dia="${dia}" data-mgsel="${(sel.mg&&sel.mg[dia])||''}">${ex}</div>${trava?'':dataTreinoSel(dia,fe)+`<button class="btn" id="finish" data-dia="${dia}">${fe?'Salvar alterações':'Finalizar e salvar'}</button>`}</div>`;
 }
 const ESTEIRA={1:[30,'5,5–6','8–10','Caminhada inclinada'],2:[30,'5,5–6','6–8','Moderada: amanhã é perna'],3:[30,'5,5','4–6','Leve: as pernas treinaram de manhã'],4:[30,'5,5–6','6–8','Moderada: amanhã é perna'],5:[30,'5,5','4–6','Leve: as pernas treinaram de manhã'],6:[45,'5,5–6','8–10','Sábado: mais longa, em qualquer horário'],0:[30,'5','0–4','Domingo: opcional, bem leve']};
 function renderEsteira(){
@@ -1526,7 +1527,7 @@ document.addEventListener('click',e=>{const t=e.target;let b;
 
 /* ===== Sincronização na nuvem (Supabase, por código) ===== */
 const SB_URL='https://wmcgbqnldrrauhzbxcpz.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndtY2dicW5sZHJyYXVoemJ4Y3B6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4Mjg4ODAsImV4cCI6MjExMDQwNDg4MH0.QKUX4vsNZ_v00ZjsHyCs3k6NM0C473pH3toyWGjxZaI';
-const SYNC_LOCAL=/^(draft_|dor_|fold|snapImport$|bkAdiado$|ultimoBackup$|sync|perfilAtual$)/;
+const SYNC_LOCAL=/^(draft|dor_|fold|snapImport$|bkAdiado$|ultimoBackup$|sync|perfilAtual$)/;
 const SYNC_COLS=['sessoes','medidas','comida','suplementos'];
 let SYNC={busy:false,t:null,last:null,err:null};
 function sgRaw(K){try{const v=localStorage.getItem(K);return v==null?undefined:JSON.parse(v)}catch(e){return undefined}}
@@ -1786,6 +1787,7 @@ function curDia(){return route()==='casa'?sel.casa:sel.treino}
 function saveDraft(dia){
   const d={};document.querySelectorAll('#view input[data-ex]').forEach(i=>{const e=i.dataset.ex,n=+i.dataset.i;(d[e]=d[e]||[]);d[e][n]=d[e][n]||{};if(i.value)d[e][n][i.dataset.f]=i.value});
   document.querySelectorAll('#view .chk').forEach(b=>{if(b.getAttribute('aria-pressed')==='true'){const [e,n]=[b.dataset.done.replace(/_\d+$/,''),+b.dataset.done.match(/_(\d+)$/)[1]];(d[e]=d[e]||[]);d[e][n]=d[e][n]||{};d[e][n].ok=1}});
+  if(Object.keys(d).length&&!ls.get('draftIni_'+dia,null))ls.set('draftIni_'+dia,hoje());
   ls.set(draftKey(dia),d);
 }
 document.addEventListener('change',e=>{if(e.target.id==='sNome')presetFill();if(e.target.id==='dorOmbro')ls.set('dor_'+curDia(),e.target.value);if(e.target.id==='exSel'){exSel=e.target.value;render()}});
@@ -1795,7 +1797,7 @@ document.addEventListener('click',async e=>{
   const p=e.target.closest('[data-pick]');
   if(p){sel.edit=false;if(route()==='casa')sel.casa=p.dataset.pick;else sel.treino=p.dataset.pick.replace(/^alt_/,'');render();return}
   if(e.target.id==='altTog'){sel.alt=!sel.alt;sel.edit=false;render();return}
-  if(e.target.id==='editT'){sel.edit=true;render();return}
+  if(e.target.id==='editT'){const dia=curDia(),fe=feitoHoje(dia);if(fe&&fe.ex){const d={};Object.entries(fe.ex).forEach(([id,arr])=>{d[id]=arr.map(x=>({...(x.kg!=null?{kg:String(x.kg)}:{}),reps:String(x.reps),ok:1}))});ls.set(draftKey(dia),d)}sel.edit=true;render();return}
   const rc=e.target.closest('[data-rcat]');if(rc){ls.set('recCat',rc.dataset.rcat);render();return}
   const bs=e.target.closest('#fBusca [data-site]');if(bs){e.preventDefault();const q=($('#bQ').value||'').trim();if(!q){toast('Escreva o produto');return}const a=document.createElement('a');a.href=lk(q,bs.dataset.site);a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();return}
   const mo=e.target.closest('[data-modo]');if(mo){ls.set('modo',mo.dataset.modo);render();toast('Objetivo: '+MODOS[mo.dataset.modo].nome);return}
@@ -1903,6 +1905,13 @@ let PR_SHOWN={};
 function checarRecorde(row){const k=row.querySelector('input[data-f="kg"]'),r=row.querySelector('input[data-f="reps"]');if(!k||!r)return;const kg=parseFloat((k.value||'').replace(',','.')),reps=parseFloat((r.value||'').replace(',','.'));
   if(!(kg>0&&reps>0))return;const id=k.dataset.ex,b=bestE1(id),n=e1rm(kg,reps);if(b>0&&n>b+.01&&!PR_SHOWN[hoje()+id]){PR_SHOWN[hoje()+id]=1;const ex=[...DIAS,...ALT,...CASA].flatMap(d=>d.ex).find(x=>x.id===id),nm=ex?nomeEx(ex):'';
     toast('🏆 Novo recorde'+(nm?' em '+nm:'')+': '+String(kg).replace('.',',')+' kg × '+reps);if(navigator.vibrate)try{navigator.vibrate([60,40,60])}catch(_){}}}
+
+function dataTreinoPadrao(dia,fe){const ini=ls.get('draftIni_'+dia,null);if(fe)return fe.data;return ini&&ini<hoje()?ini:hoje()}
+function dataTreinoEsc(dia){sel.dtT=sel.dtT||{};const v=sel.dtT[dia]||dataTreinoPadrao(dia,feitoHoje(dia));return /^\d{4}-\d{2}-\d{2}$/.test(v)&&v<=hoje()?v:hoje()}
+function dataTreinoSel(dia,fe){const v=dataTreinoEsc(dia),h=hoje(),o=isoDias(h,-1),aviso=!fe&&v!==h;
+  return `<div class="dtsel${aviso?' av':''}"><span>Data do treino</span><button type="button" data-dts="${h}" aria-pressed="${v===h}">Hoje</button><button type="button" data-dts="${o}" aria-pressed="${v===o}">Ontem</button><input type="date" id="dtTreino" value="${v}" max="${h}" aria-label="Outra data"></div>${aviso?`<p class="small" style="margin:-4px 0 8px;color:var(--orange)">Você começou este treino em ${fmtD(v)}. Ele será salvo nessa data.</p>`:''}`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-dts]');if(!b)return;sel.dtT=sel.dtT||{};sel.dtT[curDia()]=b.dataset.dts;render()});
+document.addEventListener('change',e=>{if(e.target.id!=='dtTreino')return;sel.dtT=sel.dtT||{};sel.dtT[curDia()]=e.target.value;render()});
 async function finish(dia){
   const ex={};
   document.querySelectorAll('#view .set').forEach(row=>{
@@ -1914,12 +1923,12 @@ async function finish(dia){
   if(!Object.keys(ex).length){toast('Anote pelo menos uma série');return}
   const dup=sessions.filter(x=>x.dia===dia&&x.data!==hoje()&&x.ts>Date.now()-3*864e5).find(x=>JSON.stringify(x.ex)===JSON.stringify(ex));const fb=$('#finish');
   if(dup&&fb&&fb.dataset.dupok!=='1'){fb.dataset.dupok='1';fb.textContent='Igual ao treino de '+fmtD(dup.data)+' · toque de novo para salvar';fb.classList.add('warn');toast('Este treino está idêntico ao de '+fmtD(dup.data)+'. Confira antes de salvar.');setTimeout(()=>{if(fb.isConnected){fb.dataset.dupok='';fb.textContent='Finalizar e salvar';fb.classList.remove('warn')}},6000);return}
-  const dEl=$('#dorOmbro');const doc={dia,data:hoje(),ts:Date.now(),ex};if(dEl)doc.dor=+dEl.value;{const fc=resumoFC(Date.now()-3*3600e3);if(fc){doc.fc=fc;doc.kcalFC=kcalFC(fc);HR.amostras=[]}}
-  const old=feitoHoje(dia);
+  const _dt=dataTreinoEsc(dia),dEl=$('#dorOmbro');const doc={dia,data:_dt,ts:Date.now(),ex};if(dEl)doc.dor=+dEl.value;{const fc=resumoFC(Date.now()-3*3600e3);if(fc){doc.fc=fc;doc.kcalFC=kcalFC(fc);HR.amostras=[]}}
+  const old=feitoHoje(dia)||sessions.filter(s=>s.dia===dia&&s.data===_dt).sort((a,b)=>b.ts-a.ts)[0];
   if(old){if(mode==='db'&&old._id){try{await base.collection('sessoes').doc(old._id).set(doc)}catch(e){await saveDoc('sessoes',doc)}}else{ls.set('loc_sessoes',ls.get('loc_sessoes',[]).filter(x=>x.ts!==old.ts));await saveDoc('sessoes',doc)}}else await saveDoc('sessoes',doc);
   sel.edit=false;try{localStorage.removeItem('dor_'+dia)}catch(e){}
   const antes=Date.now()-1000,prs=Object.entries(ex).filter(([id,arr])=>{const b=bestE1(id,antes),n=Math.max(...arr.map(x=>e1rm(+x.kg,+x.reps)));return n>0&&n>b+.01&&b>0});
-  ls.set(draftKey(dia),{});telaAcesa(false);render();scrollTo(0,0);{const kk=kcalSess(doc),fcT=doc.fc?' · ❤ média '+doc.fc.med:'';toast(prs.length?'🏆 '+prs.length+(prs.length>1?' recordes':' recorde')+' · ≈ '+kk+' kcal'+fcT:'Salvo · ≈ '+kk+' kcal'+fcT)}stopRest();
+  ls.set(draftKey(dia),{});ls.set('draftIni_'+dia,null);if(sel.dtT)delete sel.dtT[dia];telaAcesa(false);if(_dt!==hoje())toast('Treino salvo em '+fmtD(_dt));render();scrollTo(0,0);{const kk=kcalSess(doc),fcT=doc.fc?' · ❤ média '+doc.fc.med:'';toast(prs.length?'🏆 '+prs.length+(prs.length>1?' recordes':' recorde')+' · ≈ '+kk+' kcal'+fcT:'Salvo · ≈ '+kk+' kcal'+fcT)}stopRest();
 }
 
 /* ---------------- Descanso ---------------- */
